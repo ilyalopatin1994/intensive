@@ -14,6 +14,7 @@ export default {
 <style>
 #headerContainer {
   width: 1198px;
+  height: 276px;
   padding: 43.5px 121px 0 121px;
   margin-bottom: 32px;
   background: #fafafa;

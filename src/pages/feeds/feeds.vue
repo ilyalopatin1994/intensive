@@ -36,10 +36,25 @@ export default {
             id: 1,
             title: "Vue",
             description: "Vue is a great framework",
-            forksCount: "156k",
+            stars: "156",
+            forks: 4,
             issues: [
               { author: "Ilya", text: "My first issue on Vue", id: 1 },
               { author: "Natasha", text: "You're welcome", id: 2 },
+            ],
+          },
+        },
+        {
+          userInfo: { title: "Natasha", photo: "ProfilePic2.png" },
+          postInfo: {
+            id: 1,
+            title: "React",
+            description: "React is also great",
+            stars: "156",
+            forks: 4,
+            issues: [
+              { author: "Natasha", text: "My first issue on React", id: 1 },
+              { author: "Ilya", text: "You're welcome", id: 2 },
             ],
           },
         },
@@ -57,7 +72,6 @@ export default {
 
 #activityStream {
   width: 979px;
-  height: 1055px;
   padding-left: 230px;
   padding-right: 231px;
 }

@@ -8,20 +8,23 @@
       <span class="postTitle">{{ post.postInfo.title }}</span>
       <span class="">{{ post.postInfo.description }}</span>
       <div class="actions">
-        <div class="btnLeftBorder" />
-        <div class="btn">Star</div>
-        <div class="btnDelimiter" />
-        <div class="btnText">{{ post.postInfo.forksCount }}</div>
-        <div class="btnDelimiter" />
-        <div class="btn">Fork</div>
-        <div class="btnDelimiter" />
-        <div class="btnRightBorder" />
-        <div></div>
+        <div class="btn" id="btnStar" @click="increment($event)">
+          <img src="star.png" />
+          Star
+        </div>
+        <div class="btn" id="btnTextStar">{{ post.postInfo.stars }}</div>
+        <div class="btn" id="btnFork" @click="increment($event)">
+          <img src="fork.png" />
+          Fork
+        </div>
+        <div class="btn" id="btnTextFork">
+          {{ post.postInfo.forks }}
+        </div>
       </div>
-      <div class="issues">
-        <issue-toggler @changeDisplay="issuesHidden = $event"></issue-toggler>
-        <post-issues v-if="!issuesHidden" :issues="post.postInfo.issues" />
-      </div>
+    </div>
+    <div class="issues">
+      <issue-toggler @changeDisplay="issuesHidden = $event"></issue-toggler>
+      <post-issues v-if="!issuesHidden" :issues="post.postInfo.issues" />
     </div>
   </slot>
 </template>
@@ -49,6 +52,17 @@ export default {
       return this.issuesHidden ? "Show Issues" : "Hide issues";
     },
   },
+  methods: {
+    increment(e) {
+      if (e.target.id == "btnStar") {
+        // eslint-disable-next-line vue/no-mutating-props
+        this.post.postInfo.stars++;
+      } else {
+        // eslint-disable-next-line vue/no-mutating-props
+        this.post.postInfo.forks++;
+      }
+    },
+  },
 };
 </script>
 
@@ -59,8 +73,8 @@ export default {
   color: #292929;
   font-weight: bold;
   font-size: 18px;
-  border: 1px solid black;
   align-items: center;
+  margin-bottom: 16px;
 }
 
 .postPhoto {
@@ -70,8 +84,9 @@ export default {
 .post {
   width: 100%;
   height: 173px;
-  border: 5px solid #f1f1f1;
-  border-radius: 5px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
   padding-left: 20px;
   display: flex;
   flex-direction: column;
@@ -84,61 +99,42 @@ export default {
 }
 
 .btn {
-  background: #fafbfc;
-  box-shadow: inset 0px -1px 0px rgba(27, 31, 35, 0.12),
-    inset 0px 1px 0px rgba(27, 31, 35, 0.12);
-  width: 48px;
   height: 28px;
-  padding: 5px;
   box-sizing: border-box;
 }
 
-.btnLeftBorder {
-  background: #fafbfc;
-  /* .border/btn-15% black */
-
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  box-sizing: border-box;
+#btnStar {
   border-radius: 6px 0px 0px 6px;
-  width: 12px;
-  height: 28px;
-}
-
-.btnRightBorder {
-  background: #fafbfc;
-  width: 12px;
-  height: 28px;
-
   border: 1px solid rgba(27, 31, 35, 0.15);
-  box-sizing: border-box;
-  border-radius: 6px 0px 0px 6px;
-  transform: matrix(-1, 0, 0, 1, 0, 0);
+  padding: 3px 13px 5px 12px;
 }
 
-.btnDelimiter {
-  width: 11px;
-  height: 28px;
-  left: 11px;
-  top: 0px;
-
-  background: #ffffff;
-
-  box-shadow: inset 0px -1px 0px rgba(27, 31, 35, 0.12),
-    inset 0px 1px 0px rgba(27, 31, 35, 0.12);
-  transform: matrix(-1, 0, 0, 1, 0, 0);
+#btnTextStar {
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-left: 0px;
+  padding: 5px 12px 5px 11px;
 }
 
-.btnText {
-  padding: 5px;
-  box-sizing: border-box;
-  background: #ffffff;
-  /* btnStroke/btn-12% black */
+#btnFork {
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-left: 0px;
+  padding: 3px 13px 5px 12px;
+}
 
-  box-shadow: inset 0px -1px 0px rgba(27, 31, 35, 0.12),
-    inset 0px 1px 0px rgba(27, 31, 35, 0.12);
+#btnTextFork {
+  border-radius: 0px 6px 6px 0px;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-left: 0px;
+  padding: 5px 12px 5px 13px;
 }
 
 .actions {
   display: flex;
+  position: relative;
+}
+
+.issues {
+  margin-top: 18px;
+  padding-left: 10px;
 }
 </style>
