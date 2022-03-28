@@ -14,12 +14,12 @@
       <span class="">{{ post.postInfo.description }}</span>
       <div class="actions">
         <div class="btn" id="btnStar" @click="increment('star')">
-          <img class="icon" src="star.png" />
+          <icons width="15px" height="15px" icon-name="star" />
           Star
         </div>
         <div class="btn" id="btnTextStar">{{ post.postInfo.stars }}</div>
         <div class="btn" id="btnFork" @click.self="increment('fork')">
-          <img class="icon" src="fork.png" />
+          <icons width="15px" height="15px" icon-name="fork" />
           Fork
         </div>
         <div class="btn" id="btnTextFork">
@@ -37,10 +37,11 @@
 <script>
 import issueToggler from "@/components/feeds/issueToggler";
 import postIssues from "@/components/feeds/postIssues";
+import { icons } from "@/components/icons";
 
 export default {
   name: "postItem",
-  components: { issueToggler, postIssues },
+  components: { issueToggler, postIssues, icons },
   props: {
     post: {
       type: Object,
