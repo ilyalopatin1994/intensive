@@ -1,6 +1,11 @@
 <template>
   <div class="userInfo">
-    <img class="postPhoto" :src="post.userInfo.photo" height="40" width="40" />
+    <img
+      class="postPhoto icon"
+      :src="post.userInfo.photo"
+      height="40"
+      width="40"
+    />
     {{ post.userInfo.title }}
   </div>
   <slot>
@@ -8,12 +13,12 @@
       <span class="postTitle">{{ post.postInfo.title }}</span>
       <span class="">{{ post.postInfo.description }}</span>
       <div class="actions">
-        <div class="btn" id="btnStar" @click="increment($event)">
+        <div class="btn" id="btnStar" @click="increment('star')">
           <img class="icon" src="star.png" />
           Star
         </div>
         <div class="btn" id="btnTextStar">{{ post.postInfo.stars }}</div>
-        <div class="btn" id="btnFork" @click="increment($event)">
+        <div class="btn" id="btnFork" @click.self="increment('fork')">
           <img class="icon" src="fork.png" />
           Fork
         </div>
@@ -53,11 +58,11 @@ export default {
     },
   },
   methods: {
-    increment(e) {
-      if (e.target.id == "btnStar") {
+    increment(element) {
+      if (element === "star") {
         // eslint-disable-next-line vue/no-mutating-props
         this.post.postInfo.stars++;
-      } else {
+      } else if (element === "fork") {
         // eslint-disable-next-line vue/no-mutating-props
         this.post.postInfo.forks++;
       }

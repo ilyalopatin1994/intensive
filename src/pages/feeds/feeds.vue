@@ -66,7 +66,7 @@ export default {
 
 <style scoped>
 #container {
-  width: 1440px;
+  width: 100%;
   height: 1024px;
 }
 

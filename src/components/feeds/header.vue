@@ -2,16 +2,18 @@
   <div id="headContainer">
     <div id="label">{{ label }}</div>
     <div id="actions">
-      <img src="home.png" />
-      <img src="photo.png" />
-      <img src="signout.png" />
+      <icons icon-name="home" />
+      <icons icon-name="profile" />
+      <icons icon-name="signout" />
     </div>
   </div>
 </template>
 
 <script>
+import { icons } from "@/components/icons";
 export default {
   name: "mainPageHeader",
+  components: { icons },
   data() {
     return {
       projectName: "Gitogram",

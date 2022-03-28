@@ -5,7 +5,7 @@
       v-for="(user, index) in users"
       :key="`{${user}${index}`"
     >
-      <div><img :src="user.photo" /></div>
+      <div><img class="icon" :src="user.photo" /></div>
       <div>{{ user.title }}</div>
     </div>
   </div>
