@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import issueToggler from "@/components/feeds/issueToggler";
-import postIssues from "@/components/feeds/postIssues";
-import { icons } from "@/components/icons";
+import issueToggler from "/src/components/feeds/issueToggler";
+import postIssues from "/src/components/feeds/postIssues";
+import { icons } from "/src/components/icons";
 
 export default {
   name: "postItem",

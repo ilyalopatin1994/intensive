@@ -2,10 +2,10 @@
   <div id="container">
     <header-container>
       <template #header>
-        <main-page-header></main-page-header>
+        <main-page-header project-name="Gitogram"></main-page-header>
       </template>
       <template #stories>
-        <stories-line></stories-line>
+        <stories-line :users="usersForStories"></stories-line>
       </template>
     </header-container>
     <div
@@ -16,6 +16,12 @@
       <post-item :post="post"></post-item>
     </div>
   </div>
+  <slider
+    :user-info="usersForStories[0]"
+    header-text="Vue repository"
+    :sliders-statistics="slidersStatistics"
+    button-text="Follow"
+  ></slider>
 </template>
 
 <script>
@@ -23,10 +29,17 @@ import headerContainer from "@/components/feeds/headerContainer";
 import mainPageHeader from "@/components/feeds/header";
 import storiesLine from "@/components/feeds/storiesLine";
 import postItem from "@/components/feeds/postItem";
+import slider from "@/components/slider/slider";
 
 export default {
   name: "mainPage",
-  components: { headerContainer, mainPageHeader, storiesLine, postItem },
+  components: {
+    headerContainer,
+    mainPageHeader,
+    storiesLine,
+    postItem,
+    slider,
+  },
   data() {
     return {
       posts: [
@@ -59,6 +72,17 @@ export default {
           },
         },
       ],
+      usersForStories: [
+        { title: "Ilya", photo: "ProfilePic1.png" },
+        { title: "Natasha", photo: "ProfilePic3.png" },
+        { title: "Egor", photo: "ProfilePic2.png" },
+        { title: "Ann", photo: "ProfilePic4.png" },
+        { title: "Kostya", photo: "ProfilePic5.png" },
+      ],
+      slidersStatistics: {
+        slidersCount: 5,
+        currentIndex: 1,
+      },
     };
   },
 };

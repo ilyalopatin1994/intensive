@@ -8,3 +8,21 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.slider {
+    width: 400px;
+    max-height: 800px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.slider__progressBar {
+    display: flex;
+    width: 100%;
+    height: 10px;
+    padding:2px;
+    box-sizing: border-box;
+}
+

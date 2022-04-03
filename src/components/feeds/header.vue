@@ -2,22 +2,23 @@
   <div id="headContainer">
     <div id="label">{{ label }}</div>
     <div id="actions">
-      <icons icon-name="home" />
-      <icons icon-name="profile" />
-      <icons icon-name="signout" />
+      <slot name="icons">
+        <icons icon-name="home" />
+        <icons icon-name="profile" />
+        <icons icon-name="signout" />
+      </slot>
     </div>
   </div>
 </template>
 
 <script>
-import { icons } from "@/components/icons";
+import { icons } from "/src/components/icons";
+
 export default {
   name: "mainPageHeader",
   components: { icons },
-  data() {
-    return {
-      projectName: "Gitogram",
-    };
+  props: {
+    projectName: String,
   },
   computed: {
     label() {

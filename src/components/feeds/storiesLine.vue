@@ -13,16 +13,11 @@
 <script>
 export default {
   name: "storiesLine",
-  data() {
-    return {
-      users: [
-        { title: "Ilya", photo: "ProfilePic1.png" },
-        { title: "Natasha", photo: "ProfilePic3.png" },
-        { title: "Egor", photo: "ProfilePic2.png" },
-        { title: "Ann", photo: "ProfilePic4.png" },
-        { title: "Kostya", photo: "ProfilePic5.png" },
-      ],
-    };
+  props: {
+    users: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>
