@@ -5,27 +5,27 @@ import { withKnobs, text } from "@storybook/addon-knobs";
 export default {
   title: "confirmButton",
   components: { confirmButton },
-  decorators: [withKnobs]
+  decorators: [withKnobs],
 };
 
 const methods = {
-  follow: action("onFollow")
+  follow: action("onFollow"),
 };
 export const ConfirmButtonTemplate = () => ({
   components: { confirmButton },
   props: {
     buttonText: {
       type: String,
-      default: text("buttonText", "Follow")
-    }
+      default: text("buttonText", "Follow"),
+    },
   },
   methods,
   template: `
     <div class="slider__action">
       <confirm-button :text="buttonText" @onConfirm="follow" />
-    </div>`
+    </div>`,
 });
 
 ConfirmButtonTemplate.story = {
-  name: "Кнопка подтверждения"
+  name: "Кнопка подтверждения",
 };
