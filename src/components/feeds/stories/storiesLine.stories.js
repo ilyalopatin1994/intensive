@@ -20,7 +20,7 @@ export const StoriesLineView = () => ({
   components: { icons, storiesLine },
   props: {
     users: {
-      default: object("users", usersDefault, "groupid"),
+      default: object("users", usersDefault),
     },
   },
   template: `
