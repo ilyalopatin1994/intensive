@@ -23,15 +23,15 @@ export const DefaultSliderComponent = () => ({
   props: {
     headerText: {
       type: String,
-      default: text("text", "This is an example of slider text"),
+      default: text("text", "My vue repository"),
     },
     userInfo: {
       type: Object,
-      default: object("userInfo", userInfo, "group1"),
+      default: object("userInfo", userInfo),
     },
     slidersStatistics: {
       type: Object,
-      default: object("slidersStatistics", slidersStatistics, "group3"),
+      default: object("slidersStatistics", slidersStatistics),
     },
     buttonText: {
       type: String,

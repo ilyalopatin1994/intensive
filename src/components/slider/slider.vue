@@ -16,6 +16,26 @@
         aperiam consequuntur corporis debitis dicta et excepturi expedita harum
         ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
         voluptates voluptatum.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
+        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
+        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
+        voluptates voluptatum
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
+        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
+        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
+        voluptates voluptatum
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
+        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
+        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
+        voluptates voluptatum
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
+        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
+        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
+        voluptates voluptatum
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
+        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
+        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
+        voluptates voluptatum
       </template>
     </slider-content>
     <div class="slider__action">
@@ -84,6 +104,5 @@ img {
 .slider__action {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
 }
 </style>

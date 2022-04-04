@@ -7,14 +7,6 @@ export default {
   decorators: [withKnobs],
 };
 
-// const userInfo = {
-//   title: "Ilya",
-//   photo: "/public/ProfilePic1.png",
-// };
-
-// const style = {
-//   "font-weight": "bold",
-// };
 export const FullProgressBar = () => ({
   components: { sliderProgressBar },
   props: {
