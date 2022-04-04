@@ -15,31 +15,28 @@
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
         aperiam consequuntur corporis debitis dicta et excepturi expedita harum
         ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
-        voluptates voluptatum.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
-        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
-        voluptates voluptatum
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
-        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
-        voluptates voluptatum
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
-        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
-        voluptates voluptatum
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
-        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
-        voluptates voluptatum
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
-        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
+        voluptates voluptatum. Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Aliquid aperiam consequuntur corporis debitis dicta et
+        excepturi expedita harum ipsa iste maiores nesciunt numquam, qui soluta,
+        vel veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit
+        amet, consectetur adipisicing elit. Aliquid aperiam consequuntur
+        corporis debitis dicta et excepturi expedita harum ipsa iste maiores
+        nesciunt numquam, qui soluta, vel veritatis voluptate voluptates
+        voluptatum Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Aliquid aperiam consequuntur corporis debitis dicta et excepturi
+        expedita harum ipsa iste maiores nesciunt numquam, qui soluta, vel
+        veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Aliquid aperiam consequuntur corporis
+        debitis dicta et excepturi expedita harum ipsa iste maiores nesciunt
+        numquam, qui soluta, vel veritatis voluptate voluptates voluptatum Lorem
+        ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam
+        consequuntur corporis debitis dicta et excepturi expedita harum ipsa
+        iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
         voluptates voluptatum
       </template>
     </slider-content>
     <div class="slider__action">
-      <confirm-button :text="buttonText" @confirm="follow"></confirm-button>
+      <confirm-button :text="buttonText" @onConfirm="follow"></confirm-button>
     </div>
   </div>
 </template>
@@ -86,7 +83,7 @@ export default {
   },
   methods: {
     follow() {
-      console.log("Follow!");
+      this.$emit('onFollow')
     },
   },
 };

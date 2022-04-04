@@ -12,12 +12,6 @@
       <repository-item :repo="repo"></repository-item>
     </div>
   </div>
-  <slider
-    :user-info="usersForStories[0]"
-    header-text="Vue repository"
-    :sliders-statistics="slidersStatistics"
-    button-text="Follow"
-  ></slider>
 </template>
 
 <script>
@@ -25,7 +19,6 @@ import headerContainer from "@/components/feeds/headerContainer";
 import mainPageHeader from "@/components/feeds/header";
 import storiesLine from "@/components/feeds/storiesLine";
 import repositoryItem from "@/components/feeds/repositoryItem";
-import slider from "@/components/slider/slider";
 import axios from "axios";
 
 export default {
@@ -35,7 +28,6 @@ export default {
     mainPageHeader,
     storiesLine,
     repositoryItem,
-    slider,
   },
   data() {
     return {
@@ -47,10 +39,6 @@ export default {
         { title: "Ann", photo: "ProfilePic4.png" },
         { title: "Kostya", photo: "ProfilePic5.png" },
       ],
-      slidersStatistics: {
-        slidersCount: 5,
-        currentIndex: 1,
-      },
     };
   },
   mounted() {
