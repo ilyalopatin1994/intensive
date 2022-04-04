@@ -1,10 +1,9 @@
 <template>
-  <div class="issues">
+  <div class="clicker" @click="showOrHideAction">
     {{ hideOrShowIssuesText }}
     <img
       src="../../../public/toggler.png"
       :style="issuesHidden ? rotateTogglerImg : ''"
-      @click="showOrHideAction"
     />
   </div>
 </template>
@@ -44,4 +43,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.clicker:hover {
+  cursor: pointer;
+}
+</style>

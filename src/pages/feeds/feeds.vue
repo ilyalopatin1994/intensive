@@ -21,7 +21,7 @@ import headerContainer from "@/components/feeds/headerContainer";
 import mainPageHeader from "@/components/feeds/header";
 import storiesLine from "@/components/feeds/storiesLine";
 import repositoryItem from "@/components/feeds/repositoryItem";
-import axios from "axios";
+import { getRepositories } from "/src/api/rest/github/search";
 
 export default {
   name: "mainPage",
@@ -44,24 +44,20 @@ export default {
     };
   },
   mounted() {
-    this.getRepositories();
+    this.getRepos();
   },
   methods: {
-    async getRepositories() {
+    async getRepos() {
       // Получение списка репозиториев
-      const data = (
-        await axios.get("https://api.github.com/search/repositories", {
-          params: {
-            order: "desc",
-            sort: "start",
-            q: "language:javascript created:>2022-03-28",
-            per_page: 10,
-          },
-        })
-      ).data.items;
-      // const client2 = await axios.get(
-      //   `https://api.github.com/repos/${owner.login}/${name}/issues`
-      // );
+      const payload = {
+        params: {
+          order: "desc",
+          sort: "stars",
+          q: "language:javascript created:>2022-03-28",
+          per_page: 10,
+        },
+      };
+      const data = (await getRepositories(payload)).data.items;
       this.repositories = data;
     },
   },

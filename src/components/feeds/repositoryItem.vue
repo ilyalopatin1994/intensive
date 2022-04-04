@@ -31,8 +31,8 @@
     </div>
     <div class="issues">
       <issue-toggler
-        @changeDisplay="changeDisplay($event)"
         :hide="false"
+        @changeDisplay="changeDisplay($event)"
       ></issue-toggler>
       <repostiry-issues v-if="!issuesHidden" :issues="issues" />
     </div>
@@ -43,7 +43,8 @@
 import issueToggler from "/src/components/feeds/issueToggler";
 import repostiryIssues from "/src/components/feeds/repositoryIssues";
 import { icons } from "/src/components/icons";
-import axios from "axios";
+import { getRepoIssues } from "/src/api/rest/github/repoIssues";
+
 export default {
   name: "repositoryItem",
   components: { issueToggler, repostiryIssues, icons },
@@ -70,15 +71,13 @@ export default {
   methods: {
     async getRepoIssues() {
       const repository = this.repo;
+      const params = {
+        params: {
+          state: "all",
+        },
+      };
       const issues = (
-        await axios.get(
-          `https://api.github.com/repos/${repository.owner.login}/${repository.name}/issues`,
-          {
-            params: {
-              state: "all",
-            },
-          }
-        )
+        await getRepoIssues(repository.owner.login, repository.name, params)
       ).data;
       this.issues = issues;
     },
@@ -162,7 +161,6 @@ export default {
   display: flex;
   position: relative;
 }
-
 .issues {
   margin-top: 18px;
   padding-left: 10px;
