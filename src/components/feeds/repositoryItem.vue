@@ -38,7 +38,7 @@
 
 <script>
 import issueToggler from "/src/components/feeds/issueToggler";
-import repostiryIssues from "/src/components/feeds/repostiryIssues";
+import repostiryIssues from "/src/components/feeds/repositoryIssues";
 import { icons } from "/src/components/icons";
 import axios from "axios";
 export default {
