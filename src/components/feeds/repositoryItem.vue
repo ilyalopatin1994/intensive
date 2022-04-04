@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="issues">
-      <issue-toggler @changeDisplay="issuesHidden = $event"></issue-toggler>
+      <issue-toggler @changeDisplay="changeDisplay($event)"></issue-toggler>
       <repostiry-issues v-if="!issuesHidden" :issues="issues" />
     </div>
   </slot>
@@ -78,7 +78,10 @@ export default {
         )
       ).data;
       this.issues = issues;
-      console.log(this.issues);
+    },
+    changeDisplay(status) {
+      this.issuesHidden = status;
+      this.$emit("onChangeDisplay");
     },
   },
 };

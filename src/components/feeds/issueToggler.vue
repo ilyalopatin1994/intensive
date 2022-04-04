@@ -2,7 +2,7 @@
   <div class="issues">
     {{ hideOrShowIssuesText }}
     <img
-      src="toggler.png"
+      src="../../../public/toggler.png"
       :style="issuesHidden ? rotateTogglerImg : ''"
       @click="showOrHideAction"
     />
@@ -12,6 +12,7 @@
 <script>
 export default {
   name: "issueToggler",
+  emits: ["changeDisplay"],
   data() {
     return {
       issuesHidden: false,

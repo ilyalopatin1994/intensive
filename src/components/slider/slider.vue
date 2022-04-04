@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     follow() {
-      this.$emit('onFollow')
+      this.$emit("onFollow");
     },
   },
 };
