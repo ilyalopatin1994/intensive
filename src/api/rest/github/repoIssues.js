@@ -1,4 +1,4 @@
-import { makeRequest } from "@/api/requests";
+import { makeRequest } from "/src/api/requests";
 
 export const getRepoIssues = (login, repoName, payload) =>
   makeRequest({
