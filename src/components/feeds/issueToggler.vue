@@ -13,6 +13,15 @@
 export default {
   name: "issueToggler",
   emits: ["changeDisplay"],
+  props: {
+    hide: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  mounted() {
+    this.issuesHidden = this.hide;
+  },
   data() {
     return {
       issuesHidden: false,

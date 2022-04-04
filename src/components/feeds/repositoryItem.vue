@@ -30,7 +30,10 @@
       </div>
     </div>
     <div class="issues">
-      <issue-toggler @changeDisplay="changeDisplay($event)"></issue-toggler>
+      <issue-toggler
+        @changeDisplay="changeDisplay($event)"
+        :hide="false"
+      ></issue-toggler>
       <repostiry-issues v-if="!issuesHidden" :issues="issues" />
     </div>
   </slot>

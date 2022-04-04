@@ -12,27 +12,7 @@
         </div>
       </template>
       <template #textContent>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-        aperiam consequuntur corporis debitis dicta et excepturi expedita harum
-        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
-        voluptates voluptatum. Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid aperiam consequuntur corporis debitis dicta et
-        excepturi expedita harum ipsa iste maiores nesciunt numquam, qui soluta,
-        vel veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit
-        amet, consectetur adipisicing elit. Aliquid aperiam consequuntur
-        corporis debitis dicta et excepturi expedita harum ipsa iste maiores
-        nesciunt numquam, qui soluta, vel veritatis voluptate voluptates
-        voluptatum Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Aliquid aperiam consequuntur corporis debitis dicta et excepturi
-        expedita harum ipsa iste maiores nesciunt numquam, qui soluta, vel
-        veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit amet,
-        consectetur adipisicing elit. Aliquid aperiam consequuntur corporis
-        debitis dicta et excepturi expedita harum ipsa iste maiores nesciunt
-        numquam, qui soluta, vel veritatis voluptate voluptates voluptatum Lorem
-        ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam
-        consequuntur corporis debitis dicta et excepturi expedita harum ipsa
-        iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate
-        voluptates voluptatum
+        {{ slideContentText }}
       </template>
     </slider-content>
     <div class="slider__action">
@@ -71,6 +51,32 @@ export default {
       type: String,
       required: true,
     },
+  },
+  data() {
+    return {
+      sliderContentText:
+        "        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid\n" +
+        "        aperiam consequuntur corporis debitis dicta et excepturi expedita harum\n" +
+        "        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate\n" +
+        "        voluptates voluptatum. Lorem ipsum dolor sit amet, consectetur\n" +
+        "        adipisicing elit. Aliquid aperiam consequuntur corporis debitis dicta et\n" +
+        "        excepturi expedita harum ipsa iste maiores nesciunt numquam, qui soluta,\n" +
+        "        vel veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit\n" +
+        "        amet, consectetur adipisicing elit. Aliquid aperiam consequuntur\n" +
+        "        corporis debitis dicta et excepturi expedita harum ipsa iste maiores\n" +
+        "        nesciunt numquam, qui soluta, vel veritatis voluptate voluptates\n" +
+        "        voluptatum Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n" +
+        "        Aliquid aperiam consequuntur corporis debitis dicta et excepturi\n" +
+        "        expedita harum ipsa iste maiores nesciunt numquam, qui soluta, vel\n" +
+        "        veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit amet,\n" +
+        "        consectetur adipisicing elit. Aliquid aperiam consequuntur corporis\n" +
+        "        debitis dicta et excepturi expedita harum ipsa iste maiores nesciunt\n" +
+        "        numquam, qui soluta, vel veritatis voluptate voluptates voluptatum Lorem\n" +
+        "        ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam\n" +
+        "        consequuntur corporis debitis dicta et excepturi expedita harum ipsa\n" +
+        "        iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate\n" +
+        "        voluptates voluptatum",
+    };
   },
   computed: {
     // Процент прогресса просмотра слайдов
