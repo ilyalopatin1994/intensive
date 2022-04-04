@@ -9,7 +9,9 @@
       </template>
     </header-container>
     <div id="repositoriesList" v-for="repo in repositories" :key="repo.id">
-      <repository-item :repo="repo"></repository-item>
+      <div class="repositoryItem">
+        <repository-item :repo="repo"></repository-item>
+      </div>
     </div>
   </div>
 </template>
