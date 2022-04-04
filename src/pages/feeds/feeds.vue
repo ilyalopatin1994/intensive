@@ -103,7 +103,6 @@ export default {
       //   `https://api.github.com/repos/${owner.login}/${name}/issues`
       // );
       this.repositories = data;
-      console.log(this.repositories[0]);
     },
   },
 };

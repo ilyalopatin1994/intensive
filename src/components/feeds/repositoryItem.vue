@@ -2,7 +2,7 @@
   <div class="userInfo">
     <a :href="repo.html_url" target="_blank">
       <img
-        class="postPhoto icon"
+        class="repositoryPhoto icon"
         :src="repo.owner.avatar_url"
         height="40"
         width="40"
@@ -11,8 +11,8 @@
     {{ repo.owner.login }}
   </div>
   <slot>
-    <div class="post">
-      <span class="postTitle">{{ repo.name }}</span>
+    <div class="repository">
+      <span class="repositoryTitle">{{ repo.name }}</span>
       <span class="">{{ repo.description }}</span>
       <div class="actions">
         <div class="btn" id="btnStar">
@@ -31,19 +31,19 @@
     </div>
     <div class="issues">
       <issue-toggler @changeDisplay="issuesHidden = $event"></issue-toggler>
-      <post-issues v-if="!issuesHidden" :issues="issues" />
+      <repostiry-issues v-if="!issuesHidden" :issues="issues" />
     </div>
   </slot>
 </template>
 
 <script>
 import issueToggler from "/src/components/feeds/issueToggler";
-import postIssues from "/src/components/feeds/postIssues";
+import repostiryIssues from "/src/components/feeds/repostiryIssues";
 import { icons } from "/src/components/icons";
 import axios from "axios";
 export default {
-  name: "postItem",
-  components: { issueToggler, postIssues, icons },
+  name: "repositoryItem",
+  components: { issueToggler, repostiryIssues, icons },
   props: {
     repo: {
       type: Object,
@@ -61,6 +61,9 @@ export default {
       return this.issuesHidden ? "Show Issues" : "Hide issues";
     },
   },
+  mounted() {
+    this.getRepoIssues();
+  },
   methods: {
     async getRepoIssues() {
       const repository = this.repo;
@@ -75,6 +78,7 @@ export default {
         )
       ).data;
       this.issues = issues;
+      console.log(this.issues);
     },
   },
 };
@@ -91,7 +95,7 @@ export default {
   margin-bottom: 16px;
 }
 
-.postPhoto {
+.repositoryPhoto {
   margin-right: 14px;
 }
 
@@ -99,7 +103,7 @@ export default {
   margin-right: 4.5px;
 }
 
-.post {
+.repository {
   width: 100%;
   height: 173px;
   border: 1px solid #f1f1f1;
@@ -111,7 +115,7 @@ export default {
   justify-content: space-around;
 }
 
-.postTitle {
+.repositoryTitle {
   font-weight: bold;
   font-size: 26px;
 }
