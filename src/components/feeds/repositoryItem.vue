@@ -1,35 +1,37 @@
 <template>
   <div class="userInfo">
-    <img
-      class="postPhoto icon"
-      :src="post.userInfo.photo"
-      height="40"
-      width="40"
-    />
-    {{ post.userInfo.title }}
+    <a :href="repo.html_url" target="_blank">
+      <img
+        class="postPhoto icon"
+        :src="repo.owner.avatar_url"
+        height="40"
+        width="40"
+      />
+    </a>
+    {{ repo.owner.login }}
   </div>
   <slot>
     <div class="post">
-      <span class="postTitle">{{ post.postInfo.title }}</span>
-      <span class="">{{ post.postInfo.description }}</span>
+      <span class="postTitle">{{ repo.name }}</span>
+      <span class="">{{ repo.description }}</span>
       <div class="actions">
-        <div class="btn" id="btnStar" @click="increment('star')">
+        <div class="btn" id="btnStar">
           <icons width="15px" height="15px" icon-name="star" />
           Star
         </div>
-        <div class="btn" id="btnTextStar">{{ post.postInfo.stars }}</div>
-        <div class="btn" id="btnFork" @click.self="increment('fork')">
+        <div class="btn" id="btnTextStar">{{ repo.stargazers_count }}</div>
+        <div class="btn" id="btnFork">
           <icons width="15px" height="15px" icon-name="fork" />
           Fork
         </div>
         <div class="btn" id="btnTextFork">
-          {{ post.postInfo.forks }}
+          {{ repo.forks }}
         </div>
       </div>
     </div>
     <div class="issues">
       <issue-toggler @changeDisplay="issuesHidden = $event"></issue-toggler>
-      <post-issues v-if="!issuesHidden" :issues="post.postInfo.issues" />
+      <post-issues v-if="!issuesHidden" :issues="issues" />
     </div>
   </slot>
 </template>
@@ -38,12 +40,12 @@
 import issueToggler from "/src/components/feeds/issueToggler";
 import postIssues from "/src/components/feeds/postIssues";
 import { icons } from "/src/components/icons";
-
+import axios from "axios";
 export default {
   name: "postItem",
   components: { issueToggler, postIssues, icons },
   props: {
-    post: {
+    repo: {
       type: Object,
       default: null,
     },
@@ -51,6 +53,7 @@ export default {
   data() {
     return {
       issuesHidden: false,
+      issues: [],
     };
   },
   computed: {
@@ -59,14 +62,19 @@ export default {
     },
   },
   methods: {
-    increment(element) {
-      if (element === "star") {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.post.postInfo.stars++;
-      } else if (element === "fork") {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.post.postInfo.forks++;
-      }
+    async getRepoIssues() {
+      const repository = this.repo;
+      const issues = (
+        await axios.get(
+          `https://api.github.com/repos/${repository.owner.login}/${repository.name}/issues`,
+          {
+            params: {
+              state: "all",
+            },
+          }
+        )
+      ).data;
+      this.issues = issues;
     },
   },
 };
@@ -90,6 +98,7 @@ export default {
 .icon {
   margin-right: 4.5px;
 }
+
 .post {
   width: 100%;
   height: 173px;

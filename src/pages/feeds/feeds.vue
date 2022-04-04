@@ -8,12 +8,8 @@
         <stories-line :users="usersForStories"></stories-line>
       </template>
     </header-container>
-    <div
-      id="activityStream"
-      v-for="post in posts"
-      :key="`post${post.postInfo.id}`"
-    >
-      <post-item :post="post"></post-item>
+    <div id="repositoriesList" v-for="repo in repositories" :key="repo.id">
+      <repository-item :repo="repo"></repository-item>
     </div>
   </div>
   <slider
@@ -28,8 +24,9 @@
 import headerContainer from "@/components/feeds/headerContainer";
 import mainPageHeader from "@/components/feeds/header";
 import storiesLine from "@/components/feeds/storiesLine";
-import postItem from "@/components/feeds/postItem";
+import repositoryItem from "@/components/feeds/repositoryItem";
 import slider from "@/components/slider/slider";
+import axios from "axios";
 
 export default {
   name: "mainPage",
@@ -37,11 +34,12 @@ export default {
     headerContainer,
     mainPageHeader,
     storiesLine,
-    postItem,
+    repositoryItem,
     slider,
   },
   data() {
     return {
+      repositories: [],
       posts: [
         {
           userInfo: { title: "Ilya", photo: "ProfilePic1.png" },
@@ -85,6 +83,29 @@ export default {
       },
     };
   },
+  mounted() {
+    this.getRepositories();
+  },
+  methods: {
+    async getRepositories() {
+      // Получение списка репозиториев
+      const data = (
+        await axios.get("https://api.github.com/search/repositories", {
+          params: {
+            order: "desc",
+            sort: "start",
+            q: "language:javascript created:>2022-03-28",
+            per_page: 10,
+          },
+        })
+      ).data.items;
+      // const client2 = await axios.get(
+      //   `https://api.github.com/repos/${owner.login}/${name}/issues`
+      // );
+      this.repositories = data;
+      console.log(this.repositories[0]);
+    },
+  },
 };
 </script>
 
@@ -94,7 +115,7 @@ export default {
   height: 1024px;
 }
 
-#activityStream {
+#repositoriesList {
   width: 979px;
   padding-left: 230px;
   padding-right: 231px;
