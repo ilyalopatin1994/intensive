@@ -12,7 +12,7 @@
         </div>
       </template>
       <template #textContent>
-        {{ slideContentText }}
+        {{ sliderContentText }}
       </template>
     </slider-content>
     <div class="slider__action">
