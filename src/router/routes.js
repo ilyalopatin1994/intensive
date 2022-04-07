@@ -1,5 +1,6 @@
 import mainPage from "../pages/feeds/feeds";
 import notFound from "/src/components/notFound";
+import sliderCarousel from "/src/components/slider/sliderCarousel";
 
 export default [
   {
@@ -9,6 +10,14 @@ export default [
   {
     path: "/:id",
     component: mainPage,
+  },
+  {
+    path: "/stories",
+    component: sliderCarousel,
+  },
+  {
+    path: "/stories/:id",
+    component: sliderCarousel,
   },
   {
     path: "/:pathMath(.*)*",

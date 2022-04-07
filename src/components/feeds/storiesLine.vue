@@ -5,8 +5,10 @@
       v-for="(user, index) in users"
       :key="`{${user}${index}`"
     >
-      <div><img class="icon" :src="user.photo" /></div>
-      <div>{{ user.title }}</div>
+      <div class="image__container">
+        <img class="icon" :src="user.avatar_url" />
+      </div>
+      <div>{{ user.login }}</div>
     </div>
   </div>
 </template>
@@ -35,5 +37,16 @@ export default {
 }
 .storiesContainer__item:last-child {
   margin-right: 0px;
+}
+img {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+}
+.image__container {
+  border: 2px solid deeppink;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
 }
 </style>

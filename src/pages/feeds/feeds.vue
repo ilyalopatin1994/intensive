@@ -8,7 +8,7 @@
         <stories-line :users="usersForStories"></stories-line>
       </template>
     </header-container>
-    <div id="repositoriesList" v-for="repo in repositories" :key="repo.id">
+    <div id="repositoriesList" v-for="repo in storeRepositories" :key="repo.id">
       <div class="repositoryItem">
         <repository-item :repo="repo"></repository-item>
       </div>
@@ -21,7 +21,9 @@ import headerContainer from "@/components/feeds/headerContainer";
 import mainPageHeader from "@/components/feeds/header";
 import storiesLine from "@/components/feeds/storiesLine";
 import repositoryItem from "@/components/feeds/repositoryItem";
-import { getRepositories } from "/src/api/rest/github/search";
+import { createNamespacedHelpers } from "vuex";
+
+const { mapState } = createNamespacedHelpers("repositories");
 
 export default {
   name: "mainPage",
@@ -31,34 +33,12 @@ export default {
     storiesLine,
     repositoryItem,
   },
-  data() {
-    return {
-      repositories: [],
-      usersForStories: [
-        { title: "Ilya", photo: "ProfilePic1.png" },
-        { title: "Natasha", photo: "ProfilePic3.png" },
-        { title: "Egor", photo: "ProfilePic2.png" },
-        { title: "Ann", photo: "ProfilePic4.png" },
-        { title: "Kostya", photo: "ProfilePic5.png" },
-      ],
-    };
-  },
-  mounted() {
-    this.getRepos();
-  },
-  methods: {
-    async getRepos() {
-      // Получение списка репозиториев
-      const payload = {
-        params: {
-          order: "desc",
-          sort: "stars",
-          q: "language:javascript created:>2022-03-28",
-          per_page: 10,
-        },
-      };
-      const data = (await getRepositories(payload)).data.items;
-      this.repositories = data;
+  computed: {
+    ...mapState({
+      storeRepositories: (state) => state.repositories,
+    }),
+    usersForStories() {
+      return this.storeRepositories.map((el) => el.owner);
     },
   },
 };
