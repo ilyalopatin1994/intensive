@@ -27,7 +27,6 @@
     "@storybook/manager-webpack5": "^6.4.19",
     "@storybook/vue3": "^6.4.19",
     "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "axios": "^0.26.1",
     "babel-loader": "^8.2.4",
