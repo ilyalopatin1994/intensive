@@ -23,7 +23,7 @@ import storiesLine from "@/components/feeds/storiesLine";
 import repositoryItem from "@/components/feeds/repositoryItem";
 import { createNamespacedHelpers } from "vuex";
 
-const { mapState } = createNamespacedHelpers("repositories");
+const { mapState } = createNamespacedHelpers("github");
 
 export default {
   name: "mainPage",
@@ -36,10 +36,8 @@ export default {
   computed: {
     ...mapState({
       storeRepositories: (state) => state.repositories,
+      usersForStories: (state) => state.users,
     }),
-    usersForStories() {
-      return this.storeRepositories.map((el) => el.owner);
-    },
   },
 };
 </script>

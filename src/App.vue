@@ -4,7 +4,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("repositories");
+const { mapActions } = createNamespacedHelpers("github");
 
 export default {
   name: "App",

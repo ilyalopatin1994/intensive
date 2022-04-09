@@ -1,8 +1,8 @@
 <template>
-  <div class="slider">
+  <div class="slider" :style="styles">
     <slider-progress-bar :progress="progress"></slider-progress-bar>
     <slider-header
-      :user-info="userInfo"
+      :avatar-src="userInfo.avatar_url"
       :header-text="headerText"
     ></slider-header>
     <slider-content>
@@ -22,10 +22,13 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
 import sliderProgressBar from "./sliderProgressBar";
 import sliderHeader from "./sliderHeader";
 import sliderContent from "./sliderContent";
 import ConfirmButton from "/src/components/buttons/confirmButton";
+
+const { mapState } = createNamespacedHelpers("github");
 
 export default {
   name: "sliderComponent",
@@ -35,21 +38,25 @@ export default {
       type: Object,
       required: true,
     },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    sliderIndex: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
     headerText: {
       type: String,
       required: true,
     },
-    slidersStatistics: {
-      type: Object,
-      required: true,
-      default: () => ({
-        currentIndex: 1,
-        slidersCount: 1,
-      }),
-    },
     buttonText: {
       type: String,
       required: true,
+    },
+    styles: {
+      type: Object,
     },
   },
   data() {
@@ -79,12 +86,15 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      users: (state) => state.users,
+    }),
     // Процент прогресса просмотра слайдов
     progress() {
-      return Math.round(
-        (this.slidersStatistics.currentIndex * 100) /
-          this.slidersStatistics.slidersCount
-      );
+      if (!this.isActive) {
+        return 0;
+      }
+      return Math.round((this.sliderIndex * 100) / this.users.length);
     },
   },
   methods: {
@@ -107,5 +117,9 @@ img {
 .slider__action {
   display: flex;
   justify-content: center;
+}
+
+.inactiveSlider {
+  transform: scale(0.5);
 }
 </style>

@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
-import repositories from "./repositories";
+import github from "./github";
 
 export default createStore({
-  modules: { repositories },
+  modules: { github },
 });

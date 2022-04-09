@@ -1,7 +1,7 @@
 <template>
   <div class="slider__header">
     <div class="slider__header--photo">
-      <img :src="userInfo.photo" />
+      <img :src="avatarSrc" />
     </div>
     <div class="slider__header--text">
       <b>{{ headerText }}</b>
@@ -13,8 +13,8 @@
 export default {
   name: "sliderHeader",
   props: {
-    userInfo: {
-      type: Object,
+    avatarSrc: {
+      type: String,
       required: true,
     },
     headerText: {
@@ -30,6 +30,7 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 10px;
+  margin-bottom: 20px;
 }
 
 .slider__header--photo {

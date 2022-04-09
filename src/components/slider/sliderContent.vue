@@ -15,7 +15,7 @@ export default {
 .slider__content {
   background-color: rgb(246, 246, 246);
   margin-bottom: 24px;
-  max-height: 300px;
+  max-height: 500px;
   overflow-y: scroll;
 }
 

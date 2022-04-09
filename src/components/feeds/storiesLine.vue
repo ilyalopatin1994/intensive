@@ -5,9 +5,11 @@
       v-for="(user, index) in users"
       :key="`{${user}${index}`"
     >
-      <div class="image__container">
-        <img class="icon" :src="user.avatar_url" />
-      </div>
+      <router-link :to="`/stories/${user.id}`">
+        <div :class="['image__container', { bordered: active }]">
+          <img class="icon" :src="user.avatar_url" />
+        </div>
+      </router-link>
       <div>{{ user.login }}</div>
     </div>
   </div>
@@ -19,6 +21,10 @@ export default {
     users: {
       type: Object,
       required: true,
+    },
+    active: {
+      type: Boolean,
+      default: true,
     },
   },
 };
@@ -39,14 +45,18 @@ export default {
   margin-right: 0px;
 }
 img {
-  width: 48px;
-  height: 48px;
-  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .image__container {
-  border: 2px solid deeppink;
   width: 50px;
   height: 50px;
-  border-radius: 25px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.bordered {
+  box-shadow: 0 0 5px 0 purple;
 }
 </style>

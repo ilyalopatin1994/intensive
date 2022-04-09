@@ -2,17 +2,24 @@
     cursor: pointer;
 }
 
+html,body {
+    width: 100%;
+    height: 100%;
+}
+
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    height: 100%;
 }
 
 .slider {
-    width: 400px;
-    max-height: 500px;
-    border: 1px solid black;
+    width: 500px;
+    max-height: 700px;
+    border: 3px solid white;
     border-radius: 3px;
     display: flex;
     flex-direction: column;
@@ -33,4 +40,9 @@
 
 .repositoryItem {
     margin-top: 30px;
+}
+
+.routerView {
+    width: 100%;
+    height: 100%;
 }
