@@ -5,7 +5,7 @@
       :avatar-src="userInfo.avatar_url"
       :header-text="headerText"
     ></slider-header>
-    <slider-content>
+    <slider-content v-if="isActive">
       <template #picture>
         <div class="pictureContainer">
           <img src="../../../public/github.jpg" alt="" />
@@ -13,6 +13,46 @@
       </template>
       <template #textContent>
         {{ sliderContentText }}
+      </template>
+    </slider-content>
+    <slider-content v-if="!isActive">
+      <template #picture>
+        <div class="pictureContainer">
+          <slider-placeholder
+            p-width="100%"
+            p-height="100px"
+          ></slider-placeholder>
+          <br />
+        </div>
+      </template>
+      <template #textContent>
+        <div class="textContent">
+          <slider-placeholder
+            p-width="70%"
+            p-height="20px"
+          ></slider-placeholder>
+          <slider-placeholder
+            p-width="80%"
+            p-height="20px"
+          ></slider-placeholder>
+          <slider-placeholder
+            p-width="60%"
+            p-height="20px"
+          ></slider-placeholder>
+          <br />
+          <slider-placeholder
+            p-width="70%"
+            p-height="20px"
+          ></slider-placeholder>
+          <slider-placeholder
+            p-width="80%"
+            p-height="20px"
+          ></slider-placeholder>
+          <slider-placeholder
+            p-width="60%"
+            p-height="20px"
+          ></slider-placeholder>
+        </div>
       </template>
     </slider-content>
     <div class="slider__action">
@@ -26,6 +66,7 @@ import { createNamespacedHelpers } from "vuex";
 import sliderProgressBar from "./sliderProgressBar";
 import sliderHeader from "./sliderHeader";
 import sliderContent from "./sliderContent";
+import sliderPlaceholder from "./sliderPlaceholder";
 import ConfirmButton from "/src/components/buttons/confirmButton";
 
 const { mapState } = createNamespacedHelpers("github");
@@ -37,6 +78,7 @@ export default {
     sliderProgressBar,
     sliderHeader,
     sliderContent,
+    sliderPlaceholder,
   },
   props: {
     userInfo: {
@@ -112,6 +154,11 @@ export default {
 
 <style>
 .pictureContainer {
+  padding: 10px;
+}
+
+.textContent {
+  padding: 10px;
 }
 
 img {
