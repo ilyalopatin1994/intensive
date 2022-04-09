@@ -16,7 +16,7 @@ export default {
   async beforeMount() {
     const payload = {
       params: {
-        rate: "50",
+        rate: "40",
         order: "desc",
         sort: "stars",
         q: "language:javascript created:>2022-03-28",
