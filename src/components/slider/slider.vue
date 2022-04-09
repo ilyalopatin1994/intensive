@@ -99,13 +99,7 @@ export default {
       if (!this.isActive) {
         return 0;
       }
-      return Math.round((this.sliderIndex * 100) / this.users.length);
-    },
-    isLeftVisible() {
-      return !!this.sliderIndex;
-    },
-    isRightVisible() {
-      return this.sliderIndex === 4;
+      return Math.round(((this.sliderIndex + 1) * 100) / this.users.length);
     },
   },
   methods: {
@@ -132,25 +126,5 @@ img {
 
 .inactiveSlider {
   transform: scale(0.5);
-}
-
-.sliderArrow {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid red;
-  color: green;
-}
-
-.leftArrow {
-  position: absolute;
-  left: 50%;
-  transform: translate(-300%, -50%);
-}
-
-.leftArrow {
-  position: absolute;
-  left: 50%;
-  transform: translate(300%, -50%) rotateX(180deg);
 }
 </style>

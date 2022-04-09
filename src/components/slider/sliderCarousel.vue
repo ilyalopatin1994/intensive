@@ -1,13 +1,21 @@
 <template>
   <div class="carouselPage">
-    <!--    <div class="sliderArrow leftArrow" v-if="isActive && isLeftVisible">-->
-    <!--      <icons icon-name="arrow" />-->
-    <!--    </div>-->
-    <!--    <div class="sliderArrow leftArrow" v-if="isActive && isRightVisible">-->
-    <!--      <icons icon-name="arrow" />-->
-    <!--    </div>-->
+    <div
+      class="sliderArrow leftArrow"
+      v-if="isLeftVisible"
+      @click="activeSliderIndex--"
+    >
+      <icons icon-name="arrow" />
+    </div>
+    <div
+      class="sliderArrow rightArrow"
+      v-if="isRightVisible"
+      @click="activeSliderIndex++"
+    >
+      <icons icon-name="arrow" />
+    </div>
     <slider
-      v-for="(user, index) in usersForSlider"
+      v-for="(user, index) in users"
       :key="user.id"
       :user-info="user"
       button-text="Follow"
@@ -23,17 +31,16 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 import slider from "@/components/slider/slider";
-// import { icons } from "/src/components/icons";
+import { icons } from "/src/components/icons";
 
 const { mapState } = createNamespacedHelpers("github");
 
 export default {
   name: "sliderCarousel",
-  components: { slider },
+  components: { slider, icons },
   data() {
     return {
       activeSliderIndex: 0,
-      usersForSlider: [],
     };
   },
   computed: {
@@ -41,25 +48,19 @@ export default {
       users: (state) => state.users,
       isDataLoaded: (state) => state.isLoaded,
     }),
+    isLeftVisible() {
+      return this.activeSliderIndex > 0;
+    },
+    isRightVisible() {
+      return this.activeSliderIndex < this.users.length - 1;
+    },
   },
   mounted() {
-    let index;
     if (!this.$route.params.id) {
-      index = Math.round(this.users.length / 2) - 1;
-      this.activeSliderIndex = Math.round(index / 2) - 1;
+      this.activeSliderIndex = Math.round(this.users.length / 2) - 1;
     } else {
-      index = this.users.findIndex((user) => {
-        return parseInt(user.id) === parseInt(this.$route.params.id);
-      });
-    }
-
-    const max = this.users.length;
-    const leftEdge = index > 1 ? index - 2 : 0;
-    const rightEdge = index < max - 1 ? index + 3 : max;
-    this.usersForSlider = this.users.slice(leftEdge, rightEdge);
-    if (this.$route.params?.id) {
-      this.activeSliderIndex = this.usersForSlider.findIndex((user) => {
-        return parseInt(user.id) === parseInt(this.$route.params.id);
+      this.activeSliderIndex = this.users.findIndex((user) => {
+        return user.id.toString() === this.$route.params.id;
       });
     }
   },
@@ -100,5 +101,30 @@ export default {
   height: 100%;
   background-color: black;
   overflow: hidden;
+}
+
+.sliderArrow {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid white;
+  color: white;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.leftArrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  transform: translate(-900%, -50%);
+}
+
+.rightArrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(800%, -50%) rotateY(180deg);
 }
 </style>
