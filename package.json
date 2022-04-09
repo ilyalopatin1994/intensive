@@ -10,6 +10,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@vue/cli-plugin-eslint": "^5.0.4",
     "core-js": "^3.8.3",
     "npm": "^8.5.5",
     "vue": "^3.2.13",
