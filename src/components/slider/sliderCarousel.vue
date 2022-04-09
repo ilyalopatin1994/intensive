@@ -1,6 +1,11 @@
 <template>
   <div class="carouselPage">
-    <!--      v-for="(user, index) in users.slice(leftEdge, rightEdge + 1)"-->
+    <!--    <div class="sliderArrow leftArrow" v-if="isActive && isLeftVisible">-->
+    <!--      <icons icon-name="arrow" />-->
+    <!--    </div>-->
+    <!--    <div class="sliderArrow leftArrow" v-if="isActive && isRightVisible">-->
+    <!--      <icons icon-name="arrow" />-->
+    <!--    </div>-->
     <slider
       v-for="(user, index) in usersForSlider"
       :key="user.id"
@@ -8,7 +13,7 @@
       button-text="Follow"
       :header-text="user.login"
       :slider-index="index"
-      :is-active="user.id === activeSliderIndex"
+      :is-active="index === activeSliderIndex"
       :styles="defineSlideStyle(index)"
     >
     </slider>
@@ -18,6 +23,7 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 import slider from "@/components/slider/slider";
+// import { icons } from "/src/components/icons";
 
 const { mapState } = createNamespacedHelpers("github");
 
@@ -33,44 +39,10 @@ export default {
   computed: {
     ...mapState({
       users: (state) => state.users,
+      isDataLoaded: (state) => state.isLoaded,
     }),
-    // leftEdge () {
-    //   // Левая граница отбора слайдов из users для отображения в карусели
-    //   // Будем отибрать всего 5 слайдов, по два с каждой стороны от центра
-    //   let steps = 2; // два слева
-    //   let index = this.activeSliderIndex;
-    //   while (steps > 0) {
-    //     if (index === 0) {
-    //       break;
-    //     } else {
-    //       index--;
-    //       steps--;
-    //     }
-    //   }
-    //   return index;
-    // },
-    // rightEdge () {
-    //   // Правая граница отбора слайдов из users для отображения в карусели
-    //   // Будем отибрать всего 5 слайдов, по два с каждой стороны от центра
-    //   let steps = 2; // Два справа
-    //   let index = this.activeSliderIndex;
-    //   const max = this.users.length - 1;
-    //   while (steps > 0) {
-    //     if (index === max) {
-    //       break;
-    //     } else {
-    //       index++;
-    //       steps--;
-    //     }
-    //   }
-    //   return index;
-    // }
   },
   mounted() {
-    if (this.users.length === 0) {
-      return;
-    }
-
     let index;
     if (!this.$route.params.id) {
       index = Math.round(this.users.length / 2) - 1;

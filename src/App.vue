@@ -1,14 +1,19 @@
 <template>
-  <router-view />
+  <router-view :key="$route.path" v-if="isDataLoaded" />
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("github");
+const { mapActions, mapState } = createNamespacedHelpers("github");
 
 export default {
   name: "App",
-  beforeMount() {
+  computed: {
+    ...mapState({
+      isDataLoaded: (state) => state.isLoaded,
+    }),
+  },
+  async beforeMount() {
     const payload = {
       params: {
         rate: "50",
@@ -18,7 +23,7 @@ export default {
         per_page: 10,
       },
     };
-    this.fetchRepositories(payload);
+    await this.fetchRepositories(payload);
   },
   methods: {
     ...mapActions({

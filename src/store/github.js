@@ -3,6 +3,7 @@ import { getRepositories } from "@/api/rest/github/search";
 export default {
   namespaced: true,
   state: {
+    isLoaded: false,
     repositories: [],
     users: [],
   },
@@ -12,6 +13,9 @@ export default {
     },
   },
   mutations: {
+    SET_STATE_LOADED(state, payload) {
+      state.isLoaded = payload;
+    },
     ADD_REPOSITORIES(state, repos) {
       if (!Array.isArray(repos)) {
         repos = [repos];
@@ -37,6 +41,7 @@ export default {
       repositories.forEach((repo) => {
         store.commit("ADD_USERS", { ...repo.owner, active: true });
       });
+      store.commit("SET_STATE_LOADED", true);
     },
   },
 };
