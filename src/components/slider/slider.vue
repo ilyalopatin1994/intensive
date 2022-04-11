@@ -1,6 +1,5 @@
 <template>
   <div :class="['slider', { inactiveSlider: !isActive }]">
-    <span style="color: white">{{ loading }} </span>
     <slider-progress-bar :progress="progress"></slider-progress-bar>
     <slider-header
       :avatar-src="userInfo.avatar_url"
@@ -96,7 +95,7 @@ const { mapState } = createNamespacedHelpers("github");
 
 export default {
   name: "sliderComponent",
-  emits: ["moveOnClick"],
+  emits: ["moveOnClick", "onFollow"],
   components: {
     ConfirmButton,
     sliderProgressBar,
@@ -110,6 +109,8 @@ export default {
     return {
       loading: false,
       readmeText: "",
+      progressInterval: "",
+      progress: 0,
     };
   },
   props: {
@@ -146,13 +147,6 @@ export default {
     ...mapState({
       users: (state) => state.users,
     }),
-    // Процент прогресса просмотра слайдов
-    progress() {
-      if (!this.isActive) {
-        return 0;
-      }
-      return Math.round(((this.sliderIndex + 1) * 100) / this.users.length);
-    },
     isLeftVisible() {
       if (this.isActive) {
         return this.sliderIndex > 0;
@@ -170,6 +164,19 @@ export default {
     isActive(curr) {
       if (curr) {
         this.getReadmeText(this.userInfo.login, this.repoInfo.name);
+        this.progressInterval = setInterval(() => {
+          this.progress += 0.5;
+        }, 25);
+      }
+    },
+    progress(curr) {
+      if (curr >= 100) {
+        clearInterval(this.progressInterval);
+        if (this.sliderIndex === this.users.length - 1) {
+          this.$router.push("/");
+        } else {
+          this.moveOnClick("right");
+        }
       }
     },
   },
