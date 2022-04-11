@@ -26,9 +26,7 @@
     </div>
     <slider-content v-if="isActive && !loading">
       <template #picture>
-        <div class="pictureContainer">
-          <img :src="userInfo.avatar_url" alt="" />
-        </div>
+        <img :src="userInfo.avatar_url" alt="" />
       </template>
       <template #textContent>
         <div v-html="readmeText" />
@@ -36,13 +34,8 @@
     </slider-content>
     <slider-content v-if="!isActive">
       <template #picture>
-        <div class="pictureContainer">
-          <slider-placeholder
-            p-width="100%"
-            p-height="100px"
-          ></slider-placeholder>
-          <br />
-        </div>
+        <slider-placeholder p-width="100%" p-height="80%"></slider-placeholder>
+        <br />
       </template>
       <template #textContent>
         <div class="textContent">
@@ -171,12 +164,13 @@ export default {
     },
     progress(curr) {
       if (curr >= 100) {
-        clearInterval(this.progressInterval);
-        if (this.sliderIndex === this.users.length - 1) {
-          this.$router.push("/");
-        } else {
-          this.moveOnClick("right");
-        }
+        console.log("");
+        // clearInterval(this.progressInterval);
+        // if (this.sliderIndex === this.users.length - 1) {
+        //   this.$router.push("/");
+        // } else {
+        //   this.moveOnClick("right");
+        // }
       }
     },
   },
@@ -205,6 +199,8 @@ export default {
       }
     },
     moveOnClick(direction) {
+      clearInterval(this.progressInterval);
+      this.progress = 0;
       this.$emit("moveOnClick", direction);
     },
   },
@@ -218,7 +214,10 @@ export default {
 
 <style>
 .pictureContainer {
-  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  max-height: 250px;
+  max-width: 200px;
 }
 
 .textContent {
@@ -273,5 +272,9 @@ img {
   top: 50%;
   left: 47%;
   transform: translate(-50%, -50%);
+}
+
+img {
+  object-fit: contain;
 }
 </style>

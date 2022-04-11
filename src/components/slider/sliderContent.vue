@@ -1,7 +1,11 @@
 <template>
   <div class="slider__content">
-    <slot name="picture" />
-    <slot name="textContent" />
+    <div class="pictureContent">
+      <slot name="picture" />
+    </div>
+    <div class="textContent">
+      <slot name="textContent" />
+    </div>
   </div>
 </template>
 
@@ -13,10 +17,13 @@ export default {
 
 <style scoped>
 .slider__content {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 248);
   margin-bottom: 24px;
   max-height: 400px;
   min-height: 400px;
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*align-items: center;*/
   overflow-y: scroll;
 }
 
@@ -38,5 +45,10 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: grey;
+}
+
+.pictureContent {
+  width: 300px;
+  height: 250px;
 }
 </style>
