@@ -1,5 +1,5 @@
 <template>
-  <div class="slider" :style="styles">
+  <div :class="['slider', { inactiveSlider: !isActive }]">
     <slider-progress-bar :progress="progress"></slider-progress-bar>
     <slider-header
       :avatar-src="userInfo.avatar_url"
@@ -19,7 +19,9 @@
     >
       <icons icon-name="arrow" />
     </div>
-    <spinner-component v-if="isActive && loading" />
+    <div class="spinner-container">
+      <spinner-component v-if="isActive && loading" />
+    </div>
     <slider-content v-if="isActive && !loading">
       <template #picture>
         <div class="pictureContainer">
@@ -209,7 +211,7 @@ img {
 }
 
 .inactiveSlider {
-  transform: scale(0.5);
+  transform: scale(0.7);
 }
 
 .sliderArrow {
@@ -234,5 +236,10 @@ img {
   top: 50%;
   left: 50%;
   transform: translate(210px, -50%) rotateY(180deg);
+}
+
+.spinner-container {
+  position: relative;
+  height: 100%;
 }
 </style>

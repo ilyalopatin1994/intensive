@@ -17,16 +17,16 @@ export default {
 .lds-ring {
   display: inline-block;
   position: relative;
-  width: 500px;
-  height: 500px;
+  width: 300px;
+  height: 300px;
 }
 
 .lds-ring div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 450px;
-  height: 450px;
+  width: 100%;
+  height: 100%;
   margin: 8px;
   border: 8px solid #fff;
   border-radius: 50%;

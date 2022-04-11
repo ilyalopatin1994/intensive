@@ -45,8 +45,12 @@ export default {
   },
   methods: {
     setInitialPosition() {
+      // Изначальное позиционирование карусели
+      // Опеределяем сдвиг на основе номера слайда
+      // Смещение выполняется от центра
       const { slider, item } = this.$refs;
       if (!this.$route.params.id) {
+        // Просто берем центральный слайд. Можно брать любой
         this.activeSliderIndex = Math.round(this.users.length / 2) - 1;
       } else {
         this.activeSliderIndex = this.users.findIndex((user) => {
@@ -54,14 +58,16 @@ export default {
         });
       }
 
+      // Ширина слайда
       const width = this.getItemWidth(item[0]);
       const position = width * this.activeSliderIndex * -1;
       slider.style.transform = `translateX(${position}px)`;
     },
     changeSlide(direction) {
+      // Смещение либо 0 либо отрицательное
       const { slider, item } = this.$refs;
       const width = this.getItemWidth(item[0]);
-      let sign = -1; // Смещение от отрицательных чисел до 0 (когда открыт первый слайд)
+      let sign = -1;
       let position;
       direction === "left"
         ? this.activeSliderIndex--
@@ -71,6 +77,7 @@ export default {
       slider.style.transform = `translateX(${position}px)`;
     },
     getItemWidth(item) {
+      // Получение ширины элемента
       const width = parseInt(
         getComputedStyle(item).getPropertyValue("width"),
         10
@@ -96,12 +103,13 @@ export default {
   position: absolute;
   left: 50%;
   margin-left: -200px;
-  transition: 0.4s;
+  transition: 1s;
+  height: 100%;
 }
 
 .stories-container {
   position: relative;
-  height: 700px;
+  height: 100%;
   overflow: hidden;
 }
 </style>
