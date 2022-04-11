@@ -164,13 +164,12 @@ export default {
     },
     progress(curr) {
       if (curr >= 100) {
-        console.log("");
-        // clearInterval(this.progressInterval);
-        // if (this.sliderIndex === this.users.length - 1) {
-        //   this.$router.push("/");
-        // } else {
-        //   this.moveOnClick("right");
-        // }
+        clearInterval(this.progressInterval);
+        if (this.sliderIndex === this.users.length - 1) {
+          this.$router.push("/");
+        } else {
+          this.moveOnClick("right");
+        }
       }
     },
   },
