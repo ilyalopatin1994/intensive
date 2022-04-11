@@ -5,14 +5,29 @@
       :avatar-src="userInfo.avatar_url"
       :header-text="headerText"
     ></slider-header>
-    <slider-content v-if="isActive">
+    <div
+      class="sliderArrow leftArrow"
+      v-if="isLeftVisible"
+      @click="moveOnClick('left')"
+    >
+      <icons icon-name="arrow" />
+    </div>
+    <div
+      class="sliderArrow rightArrow"
+      v-if="isRightVisible"
+      @click="moveOnClick('right')"
+    >
+      <icons icon-name="arrow" />
+    </div>
+    <spinner-component v-if="isActive && loading" />
+    <slider-content v-if="isActive && !loading">
       <template #picture>
         <div class="pictureContainer">
-          <img src="../../../public/github.jpg" alt="" />
+          <img :src="userInfo.avatar_url" alt="" />
         </div>
       </template>
       <template #textContent>
-        {{ sliderContentText }}
+        <div v-html="readmeText" />
       </template>
     </slider-content>
     <slider-content v-if="!isActive">
@@ -67,21 +82,37 @@ import sliderProgressBar from "./sliderProgressBar";
 import sliderHeader from "./sliderHeader";
 import sliderContent from "./sliderContent";
 import sliderPlaceholder from "./sliderPlaceholder";
+import spinnerComponent from "/src/components/slider/spinner";
 import ConfirmButton from "/src/components/buttons/confirmButton";
+import { icons } from "/src/components/icons";
+import { getRepoReadme } from "/src/api/rest/github/repoReadme";
 
 const { mapState } = createNamespacedHelpers("github");
 
 export default {
   name: "sliderComponent",
+  emits: ["moveOnClick"],
   components: {
     ConfirmButton,
     sliderProgressBar,
     sliderHeader,
     sliderContent,
     sliderPlaceholder,
+    spinnerComponent,
+    icons,
+  },
+  data() {
+    return {
+      loading: true,
+      readmeText: "",
+    };
   },
   props: {
     userInfo: {
+      type: Object,
+      required: true,
+    },
+    repoInfo: {
       type: Object,
       required: true,
     },
@@ -106,32 +137,6 @@ export default {
       type: Object,
     },
   },
-  data() {
-    return {
-      sliderContentText:
-        "        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid\n" +
-        "        aperiam consequuntur corporis debitis dicta et excepturi expedita harum\n" +
-        "        ipsa iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate\n" +
-        "        voluptates voluptatum. Lorem ipsum dolor sit amet, consectetur\n" +
-        "        adipisicing elit. Aliquid aperiam consequuntur corporis debitis dicta et\n" +
-        "        excepturi expedita harum ipsa iste maiores nesciunt numquam, qui soluta,\n" +
-        "        vel veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit\n" +
-        "        amet, consectetur adipisicing elit. Aliquid aperiam consequuntur\n" +
-        "        corporis debitis dicta et excepturi expedita harum ipsa iste maiores\n" +
-        "        nesciunt numquam, qui soluta, vel veritatis voluptate voluptates\n" +
-        "        voluptatum Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n" +
-        "        Aliquid aperiam consequuntur corporis debitis dicta et excepturi\n" +
-        "        expedita harum ipsa iste maiores nesciunt numquam, qui soluta, vel\n" +
-        "        veritatis voluptate voluptates voluptatum Lorem ipsum dolor sit amet,\n" +
-        "        consectetur adipisicing elit. Aliquid aperiam consequuntur corporis\n" +
-        "        debitis dicta et excepturi expedita harum ipsa iste maiores nesciunt\n" +
-        "        numquam, qui soluta, vel veritatis voluptate voluptates voluptatum Lorem\n" +
-        "        ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam\n" +
-        "        consequuntur corporis debitis dicta et excepturi expedita harum ipsa\n" +
-        "        iste maiores nesciunt numquam, qui soluta, vel veritatis voluptate\n" +
-        "        voluptates voluptatum",
-    };
-  },
   computed: {
     ...mapState({
       users: (state) => state.users,
@@ -143,11 +148,43 @@ export default {
       }
       return Math.round(((this.sliderIndex + 1) * 100) / this.users.length);
     },
+    isLeftVisible() {
+      if (this.isActive) {
+        return this.sliderIndex > 0;
+      }
+      return false;
+    },
+    isRightVisible() {
+      if (this.isActive) {
+        return this.sliderIndex < this.users.length - 1;
+      }
+      return false;
+    },
   },
   methods: {
     follow() {
       this.$emit("onFollow");
     },
+    async getReadmeText(owner, repo) {
+      const payload = {
+        headers: {
+          accept: "application/vnd.github.v3.html",
+        },
+      };
+      const { data } = await getRepoReadme(owner, repo, payload);
+      setTimeout(() => {
+        this.loading = false;
+        this.readmeText = data;
+      }, 2000);
+    },
+    moveOnClick(direction) {
+      this.$emit("moveOnClick", direction);
+    },
+  },
+  mounted() {
+    if (this.isActive) {
+      this.getReadmeText(this.userInfo.login, this.repoInfo.name);
+    }
   },
 };
 </script>
@@ -173,5 +210,29 @@ img {
 
 .inactiveSlider {
   transform: scale(0.5);
+}
+
+.sliderArrow {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid white;
+  color: white;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.leftArrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-250px, -50%);
+}
+
+.rightArrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(210px, -50%) rotateY(180deg);
 }
 </style>
