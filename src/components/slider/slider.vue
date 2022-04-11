@@ -1,5 +1,6 @@
 <template>
   <div :class="['slider', { inactiveSlider: !isActive }]">
+    <span style="color: white">{{ loading }} </span>
     <slider-progress-bar :progress="progress"></slider-progress-bar>
     <slider-header
       :avatar-src="userInfo.avatar_url"
@@ -20,7 +21,9 @@
       <icons icon-name="arrow" />
     </div>
     <div class="spinner-container">
-      <spinner-component v-if="isActive && loading" />
+      <div class="spinner">
+        <spinner-component v-if="isActive && loading" />
+      </div>
     </div>
     <slider-content v-if="isActive && !loading">
       <template #picture>
@@ -105,7 +108,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       readmeText: "",
     };
   },
@@ -163,30 +166,45 @@ export default {
       return false;
     },
   },
+  watch: {
+    isActive(curr) {
+      if (curr) {
+        this.getReadmeText(this.userInfo.login, this.repoInfo.name);
+      }
+    },
+  },
   methods: {
     follow() {
       this.$emit("onFollow");
     },
     async getReadmeText(owner, repo) {
+      this.loading = true;
       const payload = {
         headers: {
           accept: "application/vnd.github.v3.html",
         },
       };
-      const { data } = await getRepoReadme(owner, repo, payload);
-      setTimeout(() => {
-        this.loading = false;
-        this.readmeText = data;
-      }, 2000);
+      let data;
+      try {
+        data = (await getRepoReadme(owner, repo, payload)).data;
+      } catch (e) {
+        console.log(e);
+        throw e;
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+          this.readmeText = data;
+        }, 1000);
+      }
     },
     moveOnClick(direction) {
       this.$emit("moveOnClick", direction);
     },
   },
   mounted() {
-    if (this.isActive) {
-      this.getReadmeText(this.userInfo.login, this.repoInfo.name);
-    }
+    // if (this.isActive) {
+    //   this.getReadmeText(this.userInfo.login, this.repoInfo.name);
+    // }
   },
 };
 </script>
@@ -241,5 +259,12 @@ img {
 .spinner-container {
   position: relative;
   height: 100%;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 47%;
+  transform: translate(-50%, -50%);
 }
 </style>

@@ -1,5 +1,12 @@
 <template>
   <div class="carouselPage">
+    <div class="storiesHeader">
+      <div class="storiesHeader--label">{{ projectName }}</div>
+      <router-link to="/">
+        <div class="headerActions"><icons icon-name="close" /></div>
+      </router-link>
+    </div>
+
     <div class="stories-container">
       <ul class="stories" ref="slider">
         <li v-for="(repo, index) in repositories" :key="repo.id" ref="item">
@@ -22,12 +29,19 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 import slider from "@/components/slider/slider";
+import Icons from "@/components/icons/icons";
 
 const { mapState } = createNamespacedHelpers("github");
 
 export default {
   name: "sliderCarousel",
-  components: { slider },
+  components: { Icons, slider },
+  props: {
+    projectName: {
+      type: String,
+      default: "Gitogram /",
+    },
+  },
   data() {
     return {
       activeSliderIndex: 0,
@@ -111,5 +125,22 @@ export default {
   position: relative;
   height: 100%;
   overflow: hidden;
+}
+
+.storiesHeader {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+}
+
+.storiesHeader--label {
+  color: white;
+  font-size: 20px;
+}
+
+.headerActions {
+  color: white;
+  width: 20px;
+  height: 20px;
 }
 </style>
