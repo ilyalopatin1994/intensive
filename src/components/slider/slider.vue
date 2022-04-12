@@ -210,7 +210,7 @@ export default {
         setTimeout(() => {
           this.loading = false;
           this.readmeText = data;
-        }, 1000);
+        }, 300);
       }
     },
     moveOnClick(direction) {
@@ -220,9 +220,12 @@ export default {
     },
   },
   mounted() {
-    // if (this.isActive) {
-    //   this.getReadmeText(this.userInfo.login, this.repoInfo.name);
-    // }
+    if (this.isActive) {
+      this.getReadmeText(this.userInfo.login, this.repoInfo.name);
+      this.progressInterval = setInterval(() => {
+        this.progress += 0.5;
+      }, 25);
+    }
   },
 };
 </script>
