@@ -30,6 +30,16 @@ export default {
 </script>
 
 <style scoped>
+.slider__progressBar {
+  display: flex;
+  flex: none;
+  width: 100%;
+  height: 8px;
+  padding: 2px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
 .viewed {
   background-color: #31ae54;
 }

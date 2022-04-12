@@ -1,14 +1,14 @@
 <template>
-  <div class="carouselPage">
+  <div class="storiesPage">
     <div class="storiesHeader">
-      <div class="storiesHeader--label">{{ projectName }}</div>
+      <div class="storiesHeader__label">{{ projectName }}</div>
       <router-link to="/">
-        <div class="headerActions"><icons icon-name="close" /></div>
+        <div class="header-actions"><icons icon-name="close" /></div>
       </router-link>
     </div>
 
     <div class="stories-container">
-      <ul class="stories" ref="slider">
+      <ul class="stories-line" ref="slider">
         <li v-for="(repo, index) in repositories" :key="repo.id" ref="item">
           <slider
             :user-info="repo.owner"
@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style scoped>
-.carouselPage {
+.storiesPage {
   position: relative;
   background-color: black;
   overflow: hidden;
@@ -111,14 +111,14 @@ export default {
   height: 100%;
 }
 
-.stories {
+.stories-line {
+  position: absolute;
+  height: 100%;
   display: flex;
   align-items: center;
-  position: absolute;
   left: 50%;
-  margin-left: -200px;
+  margin-left: -220px; /*200 - половина ширины слайда + 20 - компенсация отступа в flex контейнере*/
   transition: 1s;
-  height: 100%;
 }
 
 .stories-container {
@@ -133,12 +133,12 @@ export default {
   padding-top: 10px;
 }
 
-.storiesHeader--label {
+.storiesHeader__label {
   color: white;
   font-size: 20px;
 }
 
-.headerActions {
+.header-actions {
   color: white;
   width: 20px;
   height: 20px;

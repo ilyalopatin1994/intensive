@@ -1,6 +1,6 @@
 import mainPage from "../pages/feeds/feeds";
 import notFound from "/src/components/notFound";
-import sliderCarousel from "/src/components/slider/sliderCarousel";
+import sliderCarousel from "/src/components/slider/sliderStories";
 
 export default [
   {

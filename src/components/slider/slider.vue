@@ -1,5 +1,9 @@
 <template>
-  <div :class="['slider', { inactiveSlider: !isActive }]">
+  <div
+    :class="['slider', { slider_inactive: !isActive }]"
+    @mousedown="stopProgress"
+    @mouseup="startProgress"
+  >
     <slider-progress-bar :progress="progress"></slider-progress-bar>
     <slider-header
       :avatar-src="userInfo.avatar_url"
@@ -174,6 +178,18 @@ export default {
     },
   },
   methods: {
+    stopProgress() {
+      if (this.isActive) {
+        clearInterval(this.progressInterval);
+      }
+    },
+    startProgress() {
+      if (this.isActive) {
+        this.progressInterval = setInterval(() => {
+          this.progress += 0.5;
+        }, 25);
+      }
+    },
     follow() {
       this.$emit("onFollow");
     },
@@ -228,12 +244,28 @@ img {
   max-height: 100%;
 }
 
+.slider {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  border: 3px solid white;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.7);
+  padding: 10px 15px;
+  margin-right: 70px;
+  box-sizing: border-box;
+  transition: 1s;
+}
+
 .slider__action {
   display: flex;
   justify-content: center;
 }
 
-.inactiveSlider {
+.slider_inactive {
   transform: scale(0.7);
 }
 
