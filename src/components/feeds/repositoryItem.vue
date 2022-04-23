@@ -90,11 +90,13 @@ export default {
       setTimeout(() => {
         this.issues = issues;
         this.issuesLoaded = true;
-      }, 3000);
+      }, 1000);
     },
     changeDisplay(status) {
       this.issuesHidden = status;
-      if (!status && !this.issuesLoaded) {
+      this.issuesLoaded = false;
+      this.issues = [];
+      if (!status) {
         this.getRepoIssues();
       }
     },
