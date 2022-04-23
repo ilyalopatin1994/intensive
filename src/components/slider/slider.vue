@@ -73,9 +73,11 @@
     </slider-content>
     <div class="slider__action">
       <confirm-button
+        v-if="followCompleted"
         @onConfirm="follow"
         :is-active-slider="isActive"
       ></confirm-button>
+      <spinner-component v-if="!followCompleted"></spinner-component>
     </div>
   </div>
 </template>
@@ -111,6 +113,7 @@ export default {
       progressInterval: "",
       progress: 0,
       isStarred: false,
+      followCompleted: true,
     };
   },
   props: {
@@ -193,11 +196,15 @@ export default {
       }
     },
     async follow() {
+      this.followCompleted = false;
       const payload = {
         method: this.isStarred ? "DELETE" : "PUT",
       };
       await starRepository(this.userInfo.login, this.repoInfo.name, payload);
       this.isStarred = !this.isStarred;
+      setTimeout(() => {
+        this.followCompleted = true;
+      }, 1000);
     },
     async getReadmeText(owner, repo) {
       this.loading = true;

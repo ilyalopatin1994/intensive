@@ -1,12 +1,27 @@
 <template>
-  <div class="authButton" @click="authorize">Авторизоваться через github</div>
+  <div class="authContainer">
+    <div class="leftPart">
+      <h1>Gitogram /</h1>
+      <br />
+      <p class="description">More than just one repository.</p>
+      <p class="description">This is our digital world.</p>
+      <br />
+      <div class="authButton" @click="authorize">
+        <div>Авторизоваться через github</div>
+        <div class="iconContainer"><icons icon-name="github" /></div>
+      </div>
+    </div>
+    <div class="rightPart"><img src="macbook.png" /></div>
+  </div>
 </template>
 
 <script>
 import { clientId, clientSecret } from "/env";
+import Icons from "@/components/icons/icons";
 
 export default {
   name: "authorizationPage",
+  components: { Icons },
   async created() {
     const code = new URLSearchParams(window.location.search).get("code");
     if (code) {
@@ -46,14 +61,41 @@ export default {
 .authButton {
   background-color: #31ae54;
   color: white;
-  width: 240px;
-  box-sizing: border-box;
-  padding: 10px 24px;
+  padding: 15px 25px;
   border-radius: 5px;
-  height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .authButton:hover {
   cursor: pointer;
+}
+
+.authContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.iconContainer {
+  margin-left: 10px;
+}
+
+.leftPart {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 100px;
+}
+
+.rightPart {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.description {
+  color: grey;
 }
 </style>
