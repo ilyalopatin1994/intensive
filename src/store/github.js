@@ -1,10 +1,14 @@
-import { getRepositories } from "@/api/rest/github/search";
+import {
+  getRepositories,
+  getMyStarredRepositories,
+} from "/src/api/rest/github/search";
 
 export default {
   namespaced: true,
   state: {
     isLoaded: false,
-    repositories: [],
+    storiesRepositories: [],
+    starredRepositories: [],
     users: [],
   },
   getters: {
@@ -17,13 +21,15 @@ export default {
       state.isLoaded = payload;
     },
     ADD_REPOSITORIES(state, repos) {
+      const key = Object.keys(repos)[0];
+      repos = repos[key];
       if (!Array.isArray(repos)) {
         repos = [repos];
       }
-      state.repositories.push(...repos);
+      state[key].push(...repos);
     },
-    CLEAR_REPOSITORIES(state) {
-      state.length = 0;
+    CLEAR_REPOSITORIES(state, key) {
+      state[key].length = 0;
     },
     ADD_USERS(state, users) {
       if (!Array.isArray(users)) {
@@ -31,17 +37,30 @@ export default {
       }
       state.users.push(...users);
     },
+    CLEAR_USERS(state) {
+      state.users.length = 0;
+    },
   },
   actions: {
     // Заполнение списка репозиториев
-    async fetchRepositories(store, payload) {
+    async fetchTrendingRepositories(store, payload) {
       const repositories = (await getRepositories(payload)).data.items;
-      store.commit("CLEAR_REPOSITORIES");
-      store.commit("ADD_REPOSITORIES", repositories);
+      store.commit("CLEAR_REPOSITORIES", "storiesRepositories");
+      store.commit("ADD_REPOSITORIES", { storiesRepositories: repositories });
+      store.commit("CLEAR_USERS");
       repositories.forEach((repo) => {
         store.commit("ADD_USERS", { ...repo.owner, active: true });
       });
-      store.commit("SET_STATE_LOADED", true);
+    },
+
+    async fetchMyStarredRepositories(store, payload) {
+      const repositories = (await getMyStarredRepositories(payload)).data;
+      store.commit("CLEAR_REPOSITORIES", "starredRepositories");
+      store.commit("ADD_REPOSITORIES", { starredRepositories: repositories });
+    },
+
+    markDataLoaded(store, isLoaded) {
+      store.commit("SET_STATE_LOADED", isLoaded);
     },
   },
 };

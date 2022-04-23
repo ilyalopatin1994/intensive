@@ -13,7 +13,6 @@
           <slider
             :user-info="repo.owner"
             :repo-info="repo"
-            button-text="Follow"
             :header-text="repo.owner.login"
             :slider-index="index"
             :is-active="index === activeSliderIndex"
@@ -50,7 +49,7 @@ export default {
   computed: {
     ...mapState({
       users: (state) => state.users,
-      repositories: (state) => state.repositories,
+      repositories: (state) => state.storiesRepositories,
       isDataLoaded: (state) => state.isLoaded,
     }),
   },
@@ -73,7 +72,12 @@ export default {
       }
 
       // Ширина слайда
-      const width = this.getItemWidth(item[0]);
+      let width;
+      try {
+        width = this.getItemWidth(item[0]);
+      } catch (err) {
+        this.$router.replace("/stories");
+      }
       const position = width * this.activeSliderIndex * -1;
       slider.style.transform = `translateX(${position}px)`;
     },

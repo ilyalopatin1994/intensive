@@ -72,13 +72,15 @@
       </template>
     </slider-content>
     <div class="slider__action">
-      <confirm-button :text="buttonText" @onConfirm="follow"></confirm-button>
+      <confirm-button
+        @onConfirm="follow"
+        :is-active-slider="isActive"
+      ></confirm-button>
     </div>
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
 import sliderProgressBar from "./sliderProgressBar";
 import sliderHeader from "./sliderHeader";
 import sliderContent from "./sliderContent";
@@ -87,12 +89,12 @@ import spinnerComponent from "/src/components/slider/spinner";
 import ConfirmButton from "/src/components/buttons/confirmButton";
 import { icons } from "/src/components/icons";
 import { getRepoReadme } from "/src/api/rest/github/repoReadme";
-
-const { mapState } = createNamespacedHelpers("github");
+import { starRepository } from "@/api/rest/github/star";
+import { mapState } from "vuex";
 
 export default {
   name: "sliderComponent",
-  emits: ["moveOnClick", "onFollow"],
+  emits: ["moveOnClick"],
   components: {
     ConfirmButton,
     sliderProgressBar,
@@ -108,6 +110,7 @@ export default {
       readmeText: "",
       progressInterval: "",
       progress: 0,
+      isStarred: false,
     };
   },
   props: {
@@ -132,17 +135,13 @@ export default {
       type: String,
       required: true,
     },
-    buttonText: {
-      type: String,
-      required: true,
-    },
     styles: {
       type: Object,
     },
   },
   computed: {
     ...mapState({
-      users: (state) => state.users,
+      users: (state) => state.github.users,
     }),
     isLeftVisible() {
       if (this.isActive) {
@@ -155,6 +154,9 @@ export default {
         return this.sliderIndex < this.users.length - 1;
       }
       return false;
+    },
+    buttonText() {
+      return this.isStarred ? "Unfollow" : "Follow";
     },
   },
   watch: {
@@ -190,8 +192,12 @@ export default {
         }, 25);
       }
     },
-    follow() {
-      this.$emit("onFollow");
+    async follow() {
+      const payload = {
+        method: this.isStarred ? "DELETE" : "PUT",
+      };
+      await starRepository(this.userInfo.login, this.repoInfo.name, payload);
+      this.isStarred = !this.isStarred;
     },
     async getReadmeText(owner, repo) {
       this.loading = true;
@@ -222,9 +228,6 @@ export default {
   mounted() {
     if (this.isActive) {
       this.getReadmeText(this.userInfo.login, this.repoInfo.name);
-      this.progressInterval = setInterval(() => {
-        this.progress += 0.5;
-      }, 25);
     }
   },
 };

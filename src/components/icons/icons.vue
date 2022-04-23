@@ -1,5 +1,5 @@
 <template>
-  <component :is="iconName" class="icon" />
+  <component :is="iconName" class="icon" :fill-color="fillColor" />
 </template>
 
 <script>
@@ -10,6 +10,10 @@ export default {
   name: "icons",
   components: { ...icons },
   props: {
+    fillColor: {
+      type: String,
+      default: "",
+    },
     iconName: {
       type: String,
       required: true,

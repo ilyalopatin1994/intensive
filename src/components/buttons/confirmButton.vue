@@ -1,5 +1,7 @@
 <template>
-  <div class="button" @click="confirm">{{ text }}</div>
+  <div :class="['button', { followed: isFollowed }]" @click="confirm">
+    {{ buttonText }}
+  </div>
 </template>
 
 <script>
@@ -7,15 +9,29 @@ export default {
   name: "confirmButton",
   emits: ["onConfirm"],
   props: {
-    text: {
-      type: String,
-      required: true,
+    isActiveSlider: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      isFollowed: false,
+    };
+  },
+  computed: {
+    buttonText() {
+      return this.isFollowed ? "Unfollow" : "Follow";
     },
   },
   methods: {
     confirm() {
-      this.$emit("onConfirm");
+      if (this.isActiveSlider) {
+        this.isFollowed = !this.isFollowed;
+        this.$emit("onConfirm");
+      }
     },
+    async follow() {},
   },
 };
 </script>
@@ -25,5 +41,13 @@ export default {
   padding: 11px 109px;
   background-color: #31ae54;
   border-radius: 5px;
+}
+
+.followed {
+  background-color: grey;
+}
+
+.button:hover {
+  cursor: pointer;
 }
 </style>

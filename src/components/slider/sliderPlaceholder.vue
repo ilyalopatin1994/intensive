@@ -12,6 +12,6 @@ export default {
 <style scoped>
 .rectangle {
   background-color: grey;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 </style>

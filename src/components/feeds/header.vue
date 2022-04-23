@@ -4,8 +4,8 @@
     <div id="actions">
       <slot name="icons">
         <icons icon-name="home" />
-        <icons icon-name="profile" />
-        <icons icon-name="signout" />
+        <img :src="myUser.avatar_url" />
+        <icons icon-name="signout" @click="signout" />
       </slot>
     </div>
   </div>
@@ -13,6 +13,7 @@
 
 <script>
 import { icons } from "/src/components/icons";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "mainPageHeader",
@@ -23,6 +24,17 @@ export default {
   computed: {
     label() {
       return `${this.projectName} /`;
+    },
+    ...mapState({
+      myUser: (state) => state.user.myUser,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      logout: "user/logout",
+    }),
+    signout() {
+      this.logout();
     },
   },
 };

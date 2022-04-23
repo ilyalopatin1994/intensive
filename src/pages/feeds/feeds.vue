@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="container" v-if="isDataLoaded">
     <header-container>
       <template #header>
         <main-page-header project-name="Gitogram"></main-page-header>
@@ -21,9 +21,7 @@ import headerContainer from "@/components/feeds/headerContainer";
 import mainPageHeader from "@/components/feeds/header";
 import storiesLine from "@/components/feeds/storiesLine";
 import repositoryItem from "@/components/feeds/repositoryItem";
-import { createNamespacedHelpers } from "vuex";
-
-const { mapState } = createNamespacedHelpers("github");
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "mainPage",
@@ -35,8 +33,34 @@ export default {
   },
   computed: {
     ...mapState({
-      storeRepositories: (state) => state.repositories,
-      usersForStories: (state) => state.users,
+      storeRepositories: (state) => state.github.starredRepositories,
+      usersForStories: (state) => state.github.users,
+      myUser: (state) => state.user.myUser,
+      isDataLoaded: (state) => state.github.isLoaded,
+    }),
+  },
+  async beforeMount() {
+    const payload = {
+      params: {
+        rate: "40",
+        order: "desc",
+        sort: "stars",
+        q: "language:javascript created:>2022-03-28",
+        per_page: 10,
+      },
+    };
+
+    await this.fetchMyUser();
+    await this.fetchTrendingRepositories(payload);
+    await this.fetchMyStarredRepositories();
+    this.markDataLoaded(true);
+  },
+  methods: {
+    ...mapActions({
+      fetchTrendingRepositories: "github/fetchTrendingRepositories",
+      fetchMyStarredRepositories: "github/fetchMyStarredRepositories",
+      markDataLoaded: "github/markDataLoaded",
+      fetchMyUser: "user/fetchMyUser",
     }),
   },
 };

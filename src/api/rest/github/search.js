@@ -5,3 +5,12 @@ export const getRepositories = (payload) =>
     url: "/search/repositories",
     ...payload,
   });
+
+export const getMyStarredRepositories = (payload) =>
+  makeRequest({
+    url: "/user/starred",
+    headers: {
+      Authorization: `token ${localStorage.getItem("token")}`,
+    },
+    ...payload,
+  });
