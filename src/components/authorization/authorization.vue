@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     authorize() {
-      console.log("EHEEE");
       const url = "https://github.com/login/oauth/authorize";
       const params = new URLSearchParams();
       const clientId = process.env.VUE_APP_CLIENT_ID;

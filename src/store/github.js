@@ -66,7 +66,6 @@ export default {
 
     async fetchMyStarredRepositories(store, payload) {
       const repositories = (await getMyStarredRepositories(payload)).data;
-      console.log(repositories);
       store.commit("CLEAR_REPOSITORIES", "starredRepositories");
       store.commit("ADD_REPOSITORIES", { starredRepositories: repositories });
     },
