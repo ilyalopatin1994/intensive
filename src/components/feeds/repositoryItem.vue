@@ -90,7 +90,7 @@ export default {
       setTimeout(() => {
         this.issues = issues;
         this.issuesLoaded = true;
-      }, 5000);
+      }, 1000);
     },
     changeDisplay(status) {
       this.issuesHidden = status;
