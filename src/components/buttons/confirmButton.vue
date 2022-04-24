@@ -13,21 +13,18 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data() {
-    return {
-      isFollowed: false,
-    };
-  },
-  computed: {
-    buttonText() {
-      return this.isFollowed ? "Unfollow" : "Follow";
+    isFollowed: {
+      type: Boolean,
+      default: false,
+    },
+    buttonText: {
+      type: String,
+      default: "Follow",
     },
   },
   methods: {
     confirm() {
       if (this.isActiveSlider) {
-        this.isFollowed = !this.isFollowed;
         this.$emit("onConfirm");
       }
     },

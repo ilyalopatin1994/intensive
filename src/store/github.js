@@ -28,6 +28,17 @@ export default {
       }
       state[key].push(...repos);
     },
+    ADD_REPOSITORY(state, repo) {
+      const key = Object.keys(repo)[0];
+      state[key].push(repo[key]);
+    },
+    REMOVE_REPOSITORY(state, repo) {
+      const key = Object.keys(repo)[0];
+      const repoName = repo[key];
+      state[key] = state[key].filter((el) => {
+        return el.name !== repoName;
+      });
+    },
     CLEAR_REPOSITORIES(state, key) {
       state[key].length = 0;
     },
@@ -55,8 +66,17 @@ export default {
 
     async fetchMyStarredRepositories(store, payload) {
       const repositories = (await getMyStarredRepositories(payload)).data;
+      console.log(repositories);
       store.commit("CLEAR_REPOSITORIES", "starredRepositories");
       store.commit("ADD_REPOSITORIES", { starredRepositories: repositories });
+    },
+    addStarredRepo(store, repoName) {
+      store.commit("ADD_REPOSITORY", { starredRepositories: repoName });
+    },
+    removeStarredRepo(store, repoName) {
+      store.commit("REMOVE_REPOSITORY", {
+        starredRepositories: repoName,
+      });
     },
 
     markDataLoaded(store, isLoaded) {

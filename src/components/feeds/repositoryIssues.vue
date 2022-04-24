@@ -1,9 +1,20 @@
 <template>
   <div class="placeholderContainer" v-if="!issuesLoaded && !isHidden">
-    <slider-placeholder p-width="100%" p-height="10px"></slider-placeholder>
-    <slider-placeholder p-width="70%" p-height="10px"></slider-placeholder>
-    <slider-placeholder p-width="70%" p-height="10px"></slider-placeholder>
-    <slider-placeholder p-width="60%" p-height="10px"></slider-placeholder>
+    <slider-placeholder
+      p-width="100%"
+      p-height="12px"
+      :animated="true"
+    ></slider-placeholder>
+    <slider-placeholder
+      p-width="80%"
+      p-height="12px"
+      :animated="true"
+    ></slider-placeholder>
+    <slider-placeholder
+      p-width="60%"
+      p-height="12px"
+      :animated="true"
+    ></slider-placeholder>
   </div>
   <ul class="issueList" v-if="issues.length > 0">
     <li v-for="issue in issues.slice(0, 3)" :key="issue.id">
@@ -44,8 +55,8 @@ export default {
 }
 
 .placeholderContainer {
-  width: 100px;
+  width: 300px;
   height: 100px;
-  padding: 3px;
+  padding: 10px;
 }
 </style>

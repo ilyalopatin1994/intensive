@@ -76,6 +76,8 @@
         v-if="followCompleted"
         @onConfirm="follow"
         :is-active-slider="isActive"
+        :is-followed="isStarred"
+        :button-text="buttonText"
       ></confirm-button>
       <spinner-component v-if="!followCompleted"></spinner-component>
     </div>
@@ -92,7 +94,7 @@ import ConfirmButton from "/src/components/buttons/confirmButton";
 import { icons } from "/src/components/icons";
 import { getRepoReadme } from "/src/api/rest/github/repoReadme";
 import { starRepository } from "@/api/rest/github/star";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "sliderComponent",
@@ -112,7 +114,6 @@ export default {
       readmeText: "",
       progressInterval: "",
       progress: 0,
-      isStarred: false,
       followCompleted: true,
     };
   },
@@ -145,6 +146,7 @@ export default {
   computed: {
     ...mapState({
       users: (state) => state.github.users,
+      myStarredRepos: (state) => state.github.starredRepositories,
     }),
     isLeftVisible() {
       if (this.isActive) {
@@ -160,6 +162,12 @@ export default {
     },
     buttonText() {
       return this.isStarred ? "Unfollow" : "Follow";
+    },
+
+    isStarred() {
+      return this.myStarredRepos.some((el) => {
+        return el.name === this.repoInfo.name;
+      });
     },
   },
   watch: {
@@ -183,6 +191,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      removeStarredRepo: "github/removeStarredRepo",
+      addStarredRepo: "github/addStarredRepo",
+    }),
     stopProgress() {
       if (this.isActive) {
         clearInterval(this.progressInterval);
@@ -200,8 +212,17 @@ export default {
       const payload = {
         method: this.isStarred ? "DELETE" : "PUT",
       };
-      await starRepository(this.userInfo.login, this.repoInfo.name, payload);
-      this.isStarred = !this.isStarred;
+      const res = await starRepository(
+        this.userInfo.login,
+        this.repoInfo.name,
+        payload
+      );
+      if (res.status === 204) {
+        this.isStarred
+          ? this.removeStarredRepo(this.repoInfo.name)
+          : this.addStarredRepo(this.repoInfo);
+      }
+
       setTimeout(() => {
         this.followCompleted = true;
       }, 1000);
@@ -262,7 +283,7 @@ img {
   width: 400px;
   height: 600px;
   border: 3px solid white;
-  border-radius: 3px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

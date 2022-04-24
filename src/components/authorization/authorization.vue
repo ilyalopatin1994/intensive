@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { clientId, clientSecret } from "/env";
 import Icons from "@/components/icons/icons";
 
 export default {
@@ -26,6 +25,8 @@ export default {
     const code = new URLSearchParams(window.location.search).get("code");
     if (code) {
       try {
+        const clientId = process.env.VUE_APP_CLIENT_ID;
+        const clientSecret = process.env.VUE_APP_CLIENT_SECRET;
         const response = await fetch(
           "https://webdev-api.loftschool.com/github",
           {
@@ -47,8 +48,10 @@ export default {
   },
   methods: {
     authorize() {
+      console.log("EHEEE");
       const url = "https://github.com/login/oauth/authorize";
       const params = new URLSearchParams();
+      const clientId = process.env.VUE_APP_CLIENT_ID;
       params.append("client_id", clientId);
       params.append("scope", "repo");
       window.location.href = `${url}?${params}`;

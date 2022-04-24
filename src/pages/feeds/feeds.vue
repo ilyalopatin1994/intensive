@@ -49,7 +49,6 @@ export default {
         per_page: 10,
       },
     };
-
     await this.fetchMyUser();
     await this.fetchTrendingRepositories(payload);
     await this.fetchMyStarredRepositories();
