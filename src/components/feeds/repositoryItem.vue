@@ -94,10 +94,12 @@ export default {
     },
     changeDisplay(status) {
       this.issuesHidden = status;
-      this.issuesLoaded = false;
-      this.issues = [];
-      if (!status) {
-        this.getRepoIssues();
+      if (!this.issuesLoaded) {
+        this.issuesLoaded = false;
+        this.issues = [];
+        if (!status) {
+          this.getRepoIssues();
+        }
       }
     },
     starRepo(item) {
@@ -120,6 +122,7 @@ export default {
   font-size: 18px;
   align-items: center;
   margin-bottom: 16px;
+  margin-top: 10px;
 }
 
 .repositoryPhoto {
@@ -132,14 +135,14 @@ export default {
 
 .repository {
   width: 100%;
-  height: 173px;
+  height: 20vh;
   border: 1px solid #f1f1f1;
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
   padding-left: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .repositoryTitle {

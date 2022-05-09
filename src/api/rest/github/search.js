@@ -14,3 +14,12 @@ export const getMyStarredRepositories = (payload) =>
     },
     ...payload,
   });
+
+export const getMyRepositories = (payload) =>
+  makeRequest({
+    url: "/user/repos",
+    headers: {
+      Authorization: `token ${localStorage.getItem("token")}`,
+    },
+    ...payload,
+  });

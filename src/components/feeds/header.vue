@@ -3,8 +3,8 @@
     <div id="label">{{ label }}</div>
     <div id="actions">
       <slot name="icons">
-        <icons icon-name="home" />
-        <img :src="myUser.avatar_url" />
+        <icons icon-name="home" @click="goHome" />
+        <img class="icon" :src="myUser.avatar_url" @click="goToProfile" />
         <icons icon-name="signout" @click="signout" />
       </slot>
     </div>
@@ -35,6 +35,12 @@ export default {
     }),
     signout() {
       this.logout();
+    },
+    goToProfile() {
+      this.$router.push({ name: "profile" });
+    },
+    goHome() {
+      this.$router.push({ name: "feeds" });
     },
   },
 };

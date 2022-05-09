@@ -1,4 +1,5 @@
-import mainPage from "../pages/feeds/feeds";
+import mainPage from "/src/pages/feeds/feeds";
+import profilePage from "/src/pages/profile/profile";
 import notFound from "/src/components/notFound";
 import sliderCarousel from "/src/components/slider/sliderStories";
 import authorization from "/src/components/authorization/authorization";
@@ -20,6 +21,11 @@ export default [
   {
     path: "/stories/:id",
     component: sliderCarousel,
+  },
+  {
+    path: "/profile",
+    component: profilePage,
+    name: "profile",
   },
   {
     path: "/auth",
