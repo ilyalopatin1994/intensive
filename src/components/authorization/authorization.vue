@@ -1,17 +1,22 @@
 <template>
-  <div class="authContainer">
-    <div class="leftPart">
-      <h1>Gitogram /</h1>
-      <br />
-      <p class="description">More than just one repository.</p>
-      <p class="description">This is our digital world.</p>
-      <br />
-      <div class="authButton" @click="authorize">
-        <div>Авторизоваться через github</div>
-        <div class="iconContainer"><icons icon-name="github" /></div>
+  <div class="wrapper">
+    <div class="authContainer">
+      <div class="leftPart">
+        <p class="authHeader">Gitogram /</p>
+        <br />
+
+        <p class="description">More than just one repository.</p>
+        <p class="description">This is our digital world.</p>
+        <br />
+        <div class="authButton" @click="authorize">
+          <div class="authButtonText">Авторизоваться через github</div>
+          <div class="iconContainer">
+            <icons icon-name="github" />
+          </div>
+        </div>
       </div>
+      <div class="rightPart"><img src="macbook.png" /></div>
     </div>
-    <div class="rightPart"><img src="macbook.png" /></div>
   </div>
 </template>
 
@@ -60,6 +65,24 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.authHeader {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .authHeader {
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+
 .authButton {
   background-color: #31ae54;
   color: white;
@@ -69,14 +92,22 @@ export default {
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .authButton {
+    padding: 7px 10px;
+    border-radius: 5px;
+  }
+}
+
 .authButton:hover {
   cursor: pointer;
 }
 
 .authContainer {
-  width: 100%;
   height: 100%;
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .iconContainer {
@@ -84,20 +115,46 @@ export default {
 }
 
 .leftPart {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   padding: 100px;
 }
 
+@media (max-width: 360px) {
+  .leftPart {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .leftPart {
+    padding: 15px;
+  }
+}
+
 .rightPart {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .description {
   color: grey;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .description {
+    font-size: 12px;
+  }
+}
+
+.authButtonText {
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .authButtonText {
+    font-size: 10px;
+  }
+}
+
+.rightPart > img {
+  object-fit: fill;
 }
 </style>

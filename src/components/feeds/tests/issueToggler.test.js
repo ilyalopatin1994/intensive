@@ -1,12 +1,14 @@
 import issueToggler from "../issueToggler";
 import { shallowMount } from "@vue/test-utils";
 
-const mockFn = jest.fn(() => Promise.resolve({
-  "name": "Hello",
-}))
+const mockFn = jest.fn(() =>
+  Promise.resolve({
+    name: "Hello",
+  })
+);
 
 jest.mock("axios", () => ({
-  "get": mockFn
+  get: mockFn,
 }));
 
 it("Тест изменения названия issueToggler", async () => {
